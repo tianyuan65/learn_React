@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>hello React</title>
+    <title>02-使用js创建虚拟DOM</title>
 </head>
 <body>
     <!-- 准备好一个"容器" -->
@@ -13,13 +13,12 @@
     <script type="text/jacascript" src="../js/react.development.js"></script>
     <!-- 引入react-dom，用于支持react操作DOM -->
     <script type="text/jacascript" src="../js/react-dom.development.js"></script>
-    <!-- 引入babel，用于将jsx转为js -->
-    <script type="text/jacascript" src="../js/babel.min.js"></script>
-
+   
     <!-- 表示这里写的不是js，是jsx，且此处一定要写babel，啥都不写那默认就是js -->
-    <script type="text/babel">
-        // 1.创建虚拟DOM,此处不要写引号，因为不是字符串
-        const VDOM=<h1>Hello,React</h1>
+    <script type="text/javascript">
+        // 1.创建虚拟DOM
+        //标签名，标签属性，标签内容
+        const VDOM=React.createElement('h1',{id:'title'},React.createElement('span',{},'Hello,Raect'))
         // 2.渲染虚拟DOM到页面
         ReactDOM.render(VDOM,document.getElementById('test'))
     </script>
