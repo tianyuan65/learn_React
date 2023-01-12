@@ -1,5 +1,5 @@
-###React
-* **React简介*
+### React
+* **React简介**
     * 什么是react?
         * React用于构建用户界面的JS库。是一个将数据渲染为HTML视图的开源JS库。
     * React特点
@@ -17,27 +17,28 @@
     * 2. 创建一个容器
         * ```<div id="test"></div>```
     * 3. 创建虚拟DOM,渲染到容器中
-        * ```
+        * 
+        ```
             <!-- 表示这里写的不是js,是jsx,且此处一定要写babel,啥都不写那默认就是js -->
             <script type="text/babel">
                 // 1.创建虚拟DOM,此处不要写引号，因为不是字符串
                  const VDOM=<h1>Hello,React</h1>
                 // 2.渲染虚拟DOM到页面
                 ReactDOM.render(VDOM,document.getElementById("test"))
-            </script>```
+            </script>
+        ```
         * 顺利的话会在页面中的div容器里添加h1,但是我没有
-            * ![向容器中添加h1](images/在ReactNative中可以使用React语法进行移动端开发)
-* **JSX基础语法** 
-    * 定义虚拟的DOM(VDOM),不能使用引号(单双引号都不能有)
-    * 标签中混入JS表达式的时候要使用{}
-    * 
+            * ![向容器中添加h1](images/在div容器里添加上了h1.PNG)
 * ** 两种方法创建虚拟DOM
     * 1. 使用JSX创建
-        * ```const VDOM=(
+        * 
+        ```
+        const VDOM=(
             <h1 id="title">
                 <span>Hello,React</span>
             </h1>
-            )```
+        )
+        ```
     * 2.使用JS创建
         * ``` const VDOM=React.createElement('h1',{id:'title'},React.createElement('span',{},'Hello,Raect'))```
     * **使用JS创建虚拟DOM比使用JSX要复杂,还是比较推荐使用JSX来创建,且JSX使用babel翻译后就是JS的格式** 
@@ -46,11 +47,22 @@
         * 2.虚拟DOM比较“轻”,真实DOM比较“重,因为虚拟DOM是React内部在用,无需真实DOM上那么多的属性
         * 3.虚拟DOM最终会被React转化为真实DOM,呈现在页面上
         * ```
-        const TDOM=document.getElementById('demo')
-        console.log('虚拟DOM',VDOM);  //虚拟DOM Object
-        console.log('真实DOM',TDOM);  //真实DOM <div id="demo"></div>
-        debugger;
-        ```
+            const TDOM=document.getElementById('demo')
+            console.log('虚拟DOM',VDOM);  //虚拟DOM Object
+            console.log('真实DOM',TDOM);  //真实DOM <div id="demo"></div>
+            debugger;
+          ```
 
-###总结
+* **JSX基础语法规则**
+    * 1.定义虚拟DOM时,不能使用引号
+    * 2.标签中混入JS表达式时要用{}
+    * 3.样式的类名指定不要用class,要用className
+    * 4.内联样式,要用style={{key:value}}形式写
+    * 5.虚拟DOM必须只有一个根标签,要不然全是报错
+    * 6.标签必须闭合,如input标签,要么写成```<input type="text"></input>```；要么让标签自闭合```<input type="text" />```
+    * 7.标签首字母
+        * (1)若小写字母开头,则将该标签转为html中同名元素,若html中无改标签对应的同名元素,则报错
+        * (2)若大写字母开头,react就去渲染对应的组件,若组件没有定义，则报错
+
+###  总结
 
