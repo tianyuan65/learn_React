@@ -40,7 +40,10 @@
         )
         ```
     * 2.使用JS创建
-        * ``` const VDOM=React.createElement('h1',{id:'title'},React.createElement('span',{},'Hello,Raect'))```
+        * 
+        ``` 
+            const VDOM=React.createElement('h1',{id:'title'},React.createElement('span',{},'Hello,Raect'))
+        ```
     * **使用JS创建虚拟DOM比使用JSX要复杂,还是比较推荐使用JSX来创建,且JSX使用babel翻译后就是JS的格式** 
     * 关于虚拟DOM:
         * 1.本质是Object类型的对象(一半对象)
