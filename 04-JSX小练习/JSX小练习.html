@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>JSX小练习</title>
 </head>
 <body>
      <!-- 准备好一个"容器" -->
@@ -18,6 +18,19 @@
      <script type="text/javascript" src="../js/babel.min.js"></script>
 
      <script type="text/babel">
+        /*
+            定义的区分:[js语句(代码)]与[js表达式]
+                1.表达式:一个表达式产生一个值,可以放在任何一个需要值的地方
+                    如:(1) a
+                       (2) a+b
+                       (3) demo(1)  -函数调用表达式
+                       (4) arr.map()
+                       (5) function test(){}
+                2.语句/代码:
+                    如:(1) if(){}
+                       (2) for(){}
+                       (3) switch(){case:xxxx}
+         */
         //模拟一些数据
         const data=['Angular','React','Vue']
         
@@ -26,7 +39,11 @@
             <div>
                 <h1>前端js框架列表</h1>
                 <ul>
-                    {data}
+                    {
+                        data.map((item,index)=>{
+                            return <li key={index}>{item}</li>
+                        })
+                    }
                 </ul>    
             </div>
         )
