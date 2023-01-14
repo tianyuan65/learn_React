@@ -29,7 +29,7 @@
         ```
         * 顺利的话会在页面中的div容器里添加h1,但是我没有
             * ![向容器中添加h1](images/在div容器里添加上了h1.PNG)
-* ** 两种方法创建虚拟DOM
+* **两种方法创建虚拟DOM**
     * 1. 使用JSX创建
         * 
         ```
@@ -71,5 +71,24 @@
         * 给react数组，react会帮助遍历数组，但如果给了对象，无法展示任何东西，如图：
             * ![不能定义对象](images/%E4%B8%8D%E8%83%BD%E6%8E%BA%E5%AF%B9%E8%B1%A1.PNG)
 
+* **React面向组件编程**
+    * 什么是组件？
+        * 组件是用来实现局部功能效果的代码和资源的集合(html/css/js/image等待)
+        * 作用:复用编码，简化项目编码，提高运行效率
+    * 函数式组件
+        * 用函数的形式创建一个组件,组件名头一个字母必须大写,因为小写的话会去html标签中找，没有找到就会给你报错；并且必须要有返回值
+            * ```
+                function MyComponent() {
+                    // console.log(this);  //此处的this是undefined，因为babel编译后开启了严格模式
+                    return <h2>他是用函数定义的组件(适用于[简单组件]的定义)</h2>
+                }
+              ```
+        * 渲染组件到页面上，```ReactDOM.render(<MyComponent/>,document.getElementById('test'))```
+        * 执行了ReactDOM.render(<MyComponent/>...)之后，发生了什么？
+            * 1.React解析组件标签，找到了MyComponent组件
+            * 2.发现组件是使用函数定义的，随后调用该函数，将返回的虚拟DOM转为真实DOM，随后呈现在页面中
+    * 类式(Class)组件
+
 ###  总结
+* speak中的this是谁，得看是怎么调用的
 
