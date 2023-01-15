@@ -88,6 +88,14 @@
             * 1.React解析组件标签，找到了MyComponent组件
             * 2.发现组件是使用函数定义的，随后调用该函数，将返回的虚拟DOM转为真实DOM，随后呈现在页面中
     * 类式(Class)组件
+        * 无需单独创建类，只需从React.Component继承，```class MyComponent extends React.Component{}```
+        * 执行过程：
+            * React解析组件标签，找到了MyComponent组件
+            * 2.发现组件是使用类定义的，随后new出该类的实例，并通过该实例调用到原型上的render方法
+            * 3.将render返回的虚拟DOM换位真实DOM，随后呈现在页面中
+        * 另外，
+            * render是放在哪里的？  MyComponent的原型对象上，供实例使用
+            * render中的this是谁？  MyComponent的实例对象 <=> MyComponent组件的实例对象
 
 ###  总结
 * speak中的this是谁，得看是怎么调用的
