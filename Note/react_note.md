@@ -96,7 +96,17 @@
         * 另外，
             * render是放在哪里的？  MyComponent的原型对象上，供实例使用
             * render中的this是谁？  MyComponent的实例对象 <=> MyComponent组件的实例对象
+                * ![render中的this](images/render%E4%B8%AD%E7%9A%84this.PNG)
+
+* **组件实例的三大属性**
+    * 1.state 
+        * 使用react开发工具查看，组件状态里有哪些数据都被罗列了
+            * ![用react开发工具，也就是components](images/%E6%95%B0%E6%8D%AE%E7%BD%97%E5%88%97.PNG)
+        * 
+        
 
 ###  总结
 * speak中的this是谁，得看是怎么调用的
+* class,创建类组件时，react会在内部帮你做一个new的操作去实例化当前的类组件
+* 借助构造器存值
 
