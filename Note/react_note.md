@@ -102,11 +102,77 @@
     * 1.state 
         * 使用react开发工具查看，组件状态里有哪些数据都被罗列了
             * ![用react开发工具，也就是components](images/%E6%95%B0%E6%8D%AE%E7%BD%97%E5%88%97.PNG)
-        * 
+        * setState的使用
+            * ```
+                <script type="text/babel">
+                    //1.创建组件
+                    class Weather extends React.Component{
+                        constructor(props){
+                            super(props)
+                            // 初始化状态
+                            this.state={isHot:false}
+                            // 解决changeWeather中this指向问题
+                            this.changeWeather=this.changeWeather.bind(this)
+                        }
+                        // render里的this就是组件的实例对象，render中做的最多的事就是，读取状态，根据状态的值做展示
+                        render(){
+                            // 读取状态
+                            const {isHot,wind}=this.state
+                            // 不用括号，括号是立即执行
+                            // 将demo函数赋值给onClick作为回调，点击时，帮助调用demo
+                            return <h1 onClick={this.changeWeather}>今天天真{isHot ? '热':'冷'}</h1>
+                        }
+                        changeWeather() {
+                            // changeWeather放在哪里？  Weather的原型对象上，供实例使用
+                            // 通过Weather实例调用changeWeather时，changeWeather中的态度就是Weather实例
+                            // 由于changeWeather是作为onClick的回调，所以不是通过实例调用的，是直接调用的
+                            // 类中的方法默认开启了局部开启的严格模式，所以changeWeather中的this为undefined
+                            // console.log(this);  //{isHot: false}
+
+                            // 获取原来的isHot值
+                            const isHot=this.state.isHot
+                            // 严重注意：状态必须通过setState进行更新，且更新是一种是合并，不是替换
+                            this.setState({isHot:!isHot})
+
+                            // 严重注意：状态(state)不可直接更改，下面这行就是直接更改！！！
+                            // this.state.isHot=!isHot //这是错误的写法
+                        }
+                    }
+                    //2.渲染组件到页面
+                    ReactDOM.render(<Weather/>,document.getElementById('test'))
+
+                    const w=new Weather()
+                    w.changeWeather()
+                </script>
+               ```
+            * 构造器调用几次？  1次
+            * render调用几次？  1+n次，1是初始化的那次，n是状态更新的次数
+            * changeWeather调用几次？  点几次，调用几次
+            * 严重注意：状态必须通过setState进行更新，且更新是一种是合并，不是替换
+                * ```this.setState({isHot:!isHot})```
         
 
 ###  总结
 * speak中的this是谁，得看是怎么调用的
 * class,创建类组件时，react会在内部帮你做一个new的操作去实例化当前的类组件
 * 借助构造器存值
+* 函数体里面可以写任意的代码，但是类里不能写函数形式的方法
+    * ```function xxx(){}```就不行
+* 构造器里的this是组件的实例对象，render中的this是组件的实例对象，changeWeather因为不是通过组件(Weather)实例对象调用的，所以changeWeather中的this是undefined
+* 类中我定义的所有的方法，类会在局部中自动给开启严格模式，这跟babel没关系
+    * 如在函数体内开启严格模式，在外部直接调用这个函数时，会返回undefined
+        * ```
+            function demo() {
+                'use strict'
+                console.log(this);  //undefined
+            }
+            demo()
+
+            function demo2() {
+                // 'use strict'
+                console.log(this);  //Window
+            }
+            demo2()
+          ```
+* 原理就是借助了构造器函数、render函数、类本身中的this指向实例，可以有多种解决方法
 
