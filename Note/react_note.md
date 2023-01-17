@@ -150,6 +150,35 @@
             * changeWeather调用几次？  点几次，调用几次
             * 严重注意：状态必须通过setState进行更新，且更新是一种是合并，不是替换
                 * ```this.setState({isHot:!isHot})```
+        * state的简写方式，可以在类中直接写赋值语句，如下
+            * ```
+                <script type="text/babel">
+                    //1.创建组件
+                    class Weather extends React.Component{
+                        // 初始化状态
+                        // 向Weather的实例对象身上添加一个属性，名为state，值为一个对象，也就是{isHot:false,wind:'刮大风'}
+                        state={isHot:false,wind:'刮大风'}
+                        
+                        render(){
+                            const {isHot,wind}=this.state
+                            return <h1 onClick={this.changeWeather}>今天天真{isHot ? '热':'冷'},{wind}</h1>
+                        }
+
+                        // 自定义方法  写成赋值语句(constructor) + 箭头函数的形式
+                        changeWeather = ()=> {
+                            const isHot=this.state.isHot
+                            this.setState({isHot:!isHot})
+
+                        }
+                    }
+                    //2.渲染组件到页面
+                    ReactDOM.render(<Weather/>,document.getElementById('test'))
+                </script>
+
+              ```
+            * 可以看出构造器没了，直接向Weather的实例对象身上添加了属性，名为state，值为一个对象；且自定义的方法，写成了赋值语句 + 箭头函数的形式，
+                * 因为箭头函数有一大特点，就是没有自己的this，但是如果要在箭头函数里使用了this关键字的话，会找其外层函数的this作为箭头函数的this，在上面的代码中，箭头函数内打印出来的this就是Weather的实例，如图：
+                    * ![箭头函数内打印出来的this指向](images/%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0%E7%9A%84this.png)
         
 
 ###  总结
