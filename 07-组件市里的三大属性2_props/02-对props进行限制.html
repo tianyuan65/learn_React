@@ -27,7 +27,7 @@
         class Person extends React.Component{
             render(){
                 // console.log(this);
-                const {name,age,gender}=this.props
+                const {name,gender,age}=this.props
                 // props是只读的
                 // this.props.name='jack' //此行代码会报错，因为props是只读的
                 return (
@@ -43,8 +43,8 @@
         // Person.属性规则={name:'必传，字符串'}
         Person.propTypes={
             name:PropTypes.string.isRequired,  //限制name必传，且为字符串
-            age:PropTypes.number,  //限制age为数值
             gender:PropTypes.string,  //限制gender为字符串
+            age:PropTypes.number,  //限制age为数值
             speak:PropTypes.func,  //限制speak方法为函数
         }
         // 指定默认的标签属性值
@@ -57,7 +57,7 @@
         ReactDOM.render(<Person name="tom" gender="female" speak={speak}/>,document.getElementById('test1'))
         ReactDOM.render(<Person name="jerry" gender="male" age={19}/>,document.getElementById('test2'))
         
-        const p={name:'老司',age:24,age:'female'}
+        const p={name:'老司',age:24,gender:'female'}
         // ReactDOM.render(<Person name={p.name} gender={p.gender} age={p.age} />,document.getElementById('test3'))
         ReactDOM.render(<Person {...p} />,document.getElementById('test3'))
         
