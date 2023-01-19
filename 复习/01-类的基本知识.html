@@ -64,14 +64,15 @@
             // 类中可以直接写赋值语句
             // 如下代码的含义是，给Car的实例对象添加一个属性，名为a，值为1
             a=1
-
+            wheel=4
+            static demo=100
         }
         const c1=new Car('奔驰',199)
         const c2=new Car('法拉利',299)
 
-        console.log(c1);
-        console.log(c2);
-
+        console.log(c1);  //Car {a: 1, wheel: 4, name: '奔驰', price: 199}
+        console.log(c2);  //Car {a: 1, wheel: 4, name: '法拉利', price: 299}
+        console.log(Car.demo);  //100
 
 
     </script>
