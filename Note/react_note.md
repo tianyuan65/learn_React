@@ -192,11 +192,151 @@
             * 1）每个组件对象都会有props(properties的简写)属性
             * 2）组件标签的所有属性都保存在props中
         * 作用：
-            * 1）通过标签属性从组件外箱组件内传递变化的数据
+            * 1）通过标签属性从组件外向组件内传递变化的数据/props主要用来传递数据，比如组件之间进行传值
             * 2）注意：组件的内部不要修改props数据
+        * 基本使用：
+            * ```
+                <script type="text/babel">
+                    //创建组件
+                    class Person extends React.Component{
+                        render(){
+                            // console.log(this);
+                            const {name,age,gender}=this.props
+                            return (
+                                <ul>
+                                    <li>姓名：{name}</li> 
+                                    <li>性别：{gender}</li>    
+                                    <li>年龄：{age+1}</li>
+                                </ul>
+                            )
+                        }
+                    }
+
+                    // 渲染组件
+                    ReactDOM.render(<Person name="tom" age={18} gender="female"/>,document.getElementById('test1'))
+                    ReactDOM.render(<Person name="jerry" age={19} gender="male"/>,document.getElementById('test2'))
+                    
+                    const p={name:'老司',gender:'female',age:24}
+                    ReactDOM.render(<Person {...p} />,document.getElementById('test3'))
+                </script>
+              ```
+        * 对props进行限制
+            * ```
+                <script type="text/babel">
+                    //创建组件
+                    class Person extends React.Component{
+                        render(){
+                            // console.log(this);
+                            const {name,gender,age}=this.props
+                            // props是只读的
+                            // this.props.name='jack' //此行代码会报错，因为props是只读的
+                            return (
+                                <ul>
+                                    <li>姓名：{name}</li> 
+                                    <li>性别：{gender}</li>    
+                                    <li>年龄：{age+1}</li>
+                                </ul>
+                            )
+                        }
+                    }
+                    // 对标签属性进行类型、必要性的限制
+                    // Person.属性规则={name:'必传，字符串'}
+                    Person.propTypes={
+                        name:PropTypes.string.isRequired,  //限制name必传，且为字符串
+                        gender:PropTypes.string,  //限制gender为字符串
+                        age:PropTypes.number,  //限制age为数值
+                        speak:PropTypes.func,  //限制speak方法为函数
+                    }
+                    // 指定默认的标签属性值
+                    Person.defaultProps={
+                        gender:'male',  //gender默认值为male
+                        age:19  //age默认值为19
+                    }
+
+                    // 渲染组件
+                    ReactDOM.render(<Person name="tom" gender="female" speak={speak}/>,document.getElementById('test1'))
+                    ReactDOM.render(<Person name="jerry" gender="male" age={19}/>,document.getElementById('test2'))
+                    
+                    const p={name:'老司',age:24,gender:'female'}
+                    // ReactDOM.render(<Person name={p.name} gender={p.gender} age={p.age} />,document.getElementById('test3'))
+                    ReactDOM.render(<Person {...p} />,document.getElementById('test3'))
+                    
+                    function speak() {
+                        console.log('我说话了');
+                    }
+                    
+                </script>
+              ```
+        * props简写方式
+            * ```
+                <script type="text/babel">
+                    //创建组件
+                    class Person extends React.Component{
+                        // 对标签属性进行类型、必要性的限制
+                        // Person.属性规则={name:'必传，字符串'}
+                        static propTypes={
+                            name:PropTypes.string.isRequired,  //限制name必传，且为字符串
+                            gender:PropTypes.string,  //限制gender为字符串
+                            age:PropTypes.number,  //限制age为数值
+                            speak:PropTypes.func,  //限制speak方法为函数
+                        }
+
+                        // 指定默认的标签属性值
+                        static defaultProps={
+                            gender:'male',  //gender默认值为male
+                            age:19  //age默认值为19
+                        }
+
+                        render(){
+                            // console.log(this);
+                            const {name,gender,age}=this.props
+                            // props是只读的
+                            // this.props.name='jack' //此行代码会报错，因为props是只读的
+                            return (
+                                <ul>
+                                    <li>姓名：{name}</li> 
+                                    <li>性别：{gender}</li>    
+                                    <li>年龄：{age+1}</li>
+                                </ul>
+                            )
+                        }
+                    }
+
+                    // 渲染组件
+                    ReactDOM.render(<Person name="tom" gender="female" age={18} speak={speak}/>,document.getElementById('test1'))
+                    ReactDOM.render(<Person name="jerry" gender="male" age={19}/>,document.getElementById('test2'))
+                    
+                    const p={name:'老司',age:24,gender:'female'}
+                    // ReactDOM.render(<Person name={p.name} gender={p.gender} age={p.age} />,document.getElementById('test3'))
+                    ReactDOM.render(<Person {...p} />,document.getElementById('test3'))
+                    
+                    function speak() {
+                        console.log('我说话了');
+                    }
+                </script>
+              ```
         * 操作：
-            * 1）内部读取某个属性值
-                * 
+            * 扩展属性：将对象的所有属性通过props传递
+                * ```<Person {...p} />```
+            * 默认属性值
+                * ```
+                    Person.propTypes={
+                        name:PropTypes.string.isRequired,  //限制name必传，且为字符串
+                        gender:PropTypes.string,  //限制gender为字符串
+                        age:PropTypes.number,  //限制age为数值
+                    }
+                  ```
+            * 组件类的构造器
+                * ```
+                    constructor(props){
+                        // 构造器是否接收props，是否传递给super，取决于是否希望在构造器中通过this访问props
+                        // console.log(props);
+                        super(props)
+                        // 构造器中可以不传props参数，super方法中也可以不传props，虽然看起来没什么影响，但是在构造器中无法使用this(实例).props的方式取值
+                            // 如果想要在构造器内使用this.props的方式取值，就需要向构造器和super中传递props参数
+                        console.log('constructor',this.props);  //constructor Object
+                    }
+                  ```
 
 
 ###  总结
