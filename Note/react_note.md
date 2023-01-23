@@ -337,7 +337,8 @@
                         console.log('constructor',this.props);  //constructor Object
                     }
                   ```
-
+    * 3.refs 可以理解为打标识。不需要写id，最终会收集所有以ref为标识的标签，到refs属性中，收集之后的ref，不是虚拟DOM，而是该虚拟DOM转成真实DOM之后的节点
+        * ![使用refs属性，将虚拟DOM转成真实DOM](images/%E4%BD%BF%E7%94%A8refs%E5%B1%9E%E6%80%A7%E8%99%9A%E6%8B%9FDOM%E8%BD%AC%E4%B8%BA%E7%9C%9F%E5%AE%9EDOM.PNG)
 
 ###  总结
 * speak中的this是谁，得看是怎么调用的
