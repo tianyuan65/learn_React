@@ -338,7 +338,10 @@
                     }
                   ```
     * 3.refs 可以理解为打标识。不需要写id，最终会收集所有以ref为标识的标签，到refs属性中，收集之后的ref，不是虚拟DOM，而是该虚拟DOM转成真实DOM之后的节点
-        * ![使用refs属性，将虚拟DOM转成真实DOM](images/%E4%BD%BF%E7%94%A8refs%E5%B1%9E%E6%80%A7%E8%99%9A%E6%8B%9FDOM%E8%BD%AC%E4%B8%BA%E7%9C%9F%E5%AE%9EDOM.PNG)
+        * 字符串形式的refs
+            * ![使用refs属性，将虚拟DOM转成真实DOM](images/%E4%BD%BF%E7%94%A8refs%E5%B1%9E%E6%80%A7%E8%99%9A%E6%8B%9FDOM%E8%BD%AC%E4%B8%BA%E7%9C%9F%E5%AE%9EDOM.PNG)
+        * 回调函数形式的refs
+            * ```<input ref={(a)=>{this.input1=a}} type="text" placeholder="点击按钮提示数据"/>&nbsp;```的意思是把ref当前所处的节点(也就是input)，挂在实例自身上(this)，取名为input1
 
 ###  总结
 * speak中的this是谁，得看是怎么调用的
