@@ -346,6 +346,8 @@
         * createRef创建ref容器
             * ```myRef=React.createRef()```
             * ```<input ref={this.myRef} />```
+        * 发生事件的元素是要操作的元素时，可以省略ref
+            * ![省略ref](images/%E4%B8%8D%E8%A6%81%E8%BF%87%E5%BA%A6%E4%BD%BF%E7%94%A8ref.PNG)
 
 ###  总结
 * speak中的this是谁，得看是怎么调用的
