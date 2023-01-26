@@ -100,7 +100,7 @@
 
 * **组件实例的三大属性**
     * 1.state 
-        * state是组件对象最重要的属性，值时对象(可以包含多个key-value的组合)，记住！！！！绝对不可能是数组
+        * state是组件对象最重要的属性，值是对象(可以包含多个key-value的组合)，记住！！！！绝对不可能是数组
         * 组价被称为“状态机”，通过更新组件的state来更新对应的页面显示(重新渲染组件)
         * **强烈注意**
             * 组件中的render方法中的this为组件实例对象
@@ -348,6 +348,68 @@
             * ```<input ref={this.myRef} />```
         * 发生事件的元素是要操作的元素时，可以省略ref
             * ![省略ref](images/%E4%B8%8D%E8%A6%81%E8%BF%87%E5%BA%A6%E4%BD%BF%E7%94%A8ref.PNG)
+        * 非受控组件
+            * 页面中所有的输入类的DOM，现用现取就是**非受控组件**，就像：
+                * 啥是现用现取？点击了登录按钮，就会调用handleSubmit回调函数，就会取```const {username,password}=this```这个节点，```alert(`你输入的用户名是:${username.value},密码是:${password.value}`)```这个操作是取节点的value值，这就属于现用现取
+                * ```
+                    class Login extends React.Component{
+                        handleSubmit=(event)=>{
+                            event.preventDefault()  //阻止表单提交
+                            const {username,password}=this
+                            alert(`你输入的用户名是:${username.value},密码是:${password.value}`)
+                        }
+
+                        render(){
+                            return(
+                                <form onSubmit={this.handleSubmit}>
+                                    用户名：<input ref={c=>this.username=c} type="text" name="usrename"/>
+                                    密码：<input ref={c=>this.password=c} type="password" name="password"/>
+                                    <button>登录</button>
+                                </form>
+                            )
+                        }
+                    }
+                  ```
+        * 受控组件
+            * 页面中所有输入类的DOM，下面的就是input框，随着用户的输入，可以把值维护到状态中，也就是state中，需要的时候，直接从状态中取出使用，这就是**受控组件**，优点是，可以省略掉ref
+            * 取出来的值是什么取决于是怎么放的，怎么取值取决于值放在哪儿了，```const {username,password}=this.state```中，this.state里拿到的username和password是真正的值，所以弹窗中不能写```username.value```或```password.value```，取出来的值会是undefined
+                * ![](images/%E5%80%BC%E5%92%8B%E6%94%BE%E7%9A%84%E5%B0%B1%E5%92%8B%E5%8F%96.PNG)
+            * ```
+                class Login extends React.Component{
+                    // 初始化状态
+                    state={
+                        username:'', //用户名
+                        password:''  //密码
+                    }
+
+                    // 保存用户名到状态中
+                    saveUsername=()=>{
+                        this.setState({username:event.target.value})
+                    }
+
+                    // 保存密码到状态中s
+                    savePassword=()=>{
+                        this.setState({password:event.target.value})
+                    }
+
+                    // 表单提交的回调
+                    handleSubmit=(event)=>{
+                        event.preventDefault()  //阻止表单提交
+                        const {username,password}=this.state
+                        alert(`你输入的用户名是:${username},密码是:${password}`)
+                    }
+
+                    render(){
+                        return(
+                            <form onSubmit={this.handleSubmit}>
+                                用户名：<input onChange={this.saveUsername} type="text" name="usrename"/>
+                                密码：<input onChange={this.savePassword} type="password" name="password"/>
+                                <button>登录</button>
+                            </form>
+                        )
+                    }
+                }
+              ```
 
 ###  总结
 * speak中的this是谁，得看是怎么调用的
