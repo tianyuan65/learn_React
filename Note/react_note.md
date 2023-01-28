@@ -410,6 +410,44 @@
                     }
                 }
               ```
+    * 高阶函数&函数柯里化
+        * 下面这种情况的含义是saveFormData的返回值(这个返回值依然是个函数，这个函数才是真正的onChange的回调)交给了onChange作为回调，不是将saveFormData函数交给onChange作为回调
+            * ```用户名：<input onChange={this.saveFormData('username')} type="text" name="usrename"/>```
+            * ```用户名：<input onChange={this.saveFormData} type="text" name="usrename"/>```这样才是将saveFormData函数交给onChange做回调
+        * 不用函数柯里化的实现
+            * onchange需要一个函数作为回调，React就会，调用函数，传入event参数，通过event.target.value就可以取到值，在下面的箭头函数中调用了this.saveFormData，在这里没用柯里化，但是也实现了
+                * ```
+                    class Login extends React.Component{
+                        // 初始化状态
+                        state={
+                            username:'', //用户名
+                            password:''  //密码
+                        }
+
+                        // 保存表单数据到状态中
+                        saveFormData=(dataType,value)=>{
+                                this.setState({[dataType]:value})
+                            }
+                        }
+
+                        // 表单提交的回调
+                        handleSubmit=(event)=>{
+                            event.preventDefault()  //阻止表单提交
+                            const {username,password}=this.state
+                            alert(`你输入的用户名是:${username},密码是:${password}`)
+                        }
+
+                        render(){
+                            return(
+                                <form onSubmit={this.handleSubmit}>
+                                    用户名：<input onChange={(event)=>{this.saveFormData('username',event.target.value)}} type="text" name="usrename"/>
+                                    密码：<input onChange={this.saveFormData('password')} type="password" name="password"/>
+                                    <button>登录</button>
+                                </form>
+                            )
+                        }
+                    }
+                  ```
 
 ###  总结
 * speak中的this是谁，得看是怎么调用的
