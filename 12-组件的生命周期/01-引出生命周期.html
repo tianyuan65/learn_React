@@ -32,6 +32,7 @@
             // 它为啥不写成赋值语句+箭头函数的形式？因为它跟render是兄弟，这个函数是通过Life的实例对象调用的
             // 组件挂载完毕之后调用
             componentDidMount(){
+                console.log('componentDidMount');
                 this.timer=setInterval(()=>{
                     // 获取原状态
                     let {opacity}=this.state

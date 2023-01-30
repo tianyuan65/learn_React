@@ -425,8 +425,8 @@
                         }
 
                         // 保存表单数据到状态中
-                        saveFormData=(dataType,value)=>{
-                                this.setState({[dataType]:value})
+                        saveFormData=(dataType,event)=>{
+                                this.setState({[dataType]:event.target.value})
                             }
                         }
 
@@ -440,14 +440,69 @@
                         render(){
                             return(
                                 <form onSubmit={this.handleSubmit}>
-                                    用户名：<input onChange={(event)=>{this.saveFormData('username',event.target.value)}} type="text" name="usrename"/>
-                                    密码：<input onChange={this.saveFormData('password')} type="password" name="password"/>
+                                    用户名：<input onChange={event=>this.saveFormData('username',event.target.value)} type="text" name="usrename"/>
+                                    密码：<input onChange={event=>this.saveFormData('password',event.target.value)} type="password" name="password"/>
                                     <button>登录</button>
                                 </form>
                             )
                         }
                     }
                   ```
+    * 组件的生命周期，React的声明周期就像在关键的点，调用特殊的函数componentDidMount和componentWillUnmount函数，在函数里面完成特殊的事情
+        * 就像人的一生，
+            * 出生了 ==> 组件挂载完毕后调用componentDidMount函数
+            * 中间学会了很多事 ==> 记录一下
+            * 病危了(还没死) ==> 调用componentWillUnmount函数，在里面清除定时器
+        * ```
+            // 创建组件
+            // 生命周期回调函数 <=> 生命周期钩子函数 <=> 生命周期函数 <=> 生命周期钩子
+            class Life extends React.Component{
+                state={opacity:1}
+
+                // 赋值语句+箭头函数，作为事件的回调函数使用
+                death=()=>{
+                    // 卸载组件
+                    ReactDOM.unmountComponentAtNode(document.getElementById('test'))
+                }
+                
+                // 它为啥不写成赋值语句+箭头函数的形式？因为它跟render是兄弟，这个函数是通过Life的实例对象调用的
+                // 组件挂载完毕之后调用
+                componentDidMount(){
+                    this.timer=setInterval(()=>{
+                        // 获取原状态
+                        let {opacity}=this.state
+                        // 减小0.1
+                        opacity-=0.1
+                        if(opacity<=0) opacity=1
+                        // 设置新的透明度/更新状态
+                        this.setState({opacity})
+                    },200)
+                }
+
+                // 组件将要卸载
+                componentWillUnmount(){
+                    // 清除定时器
+                    clearInterval(this.timer)
+                }
+
+                // render调用的时机：初始化渲染、状态更新之后
+                render(){
+                    console.log('render');
+                    
+                    return (
+                        <div>
+                            <h2 style={{opacity:this.state.opacity}}>React学不会怎么办?</h2>
+                            <button onClick={this.death}>老师说别活了</button>
+                            
+                        </div>
+                    )
+                }
+            }
+          ```
+        * 理解：
+            * 1.组件从创建到苏王会经历一些特定的阶段
+            * 2.React组件中包含一系列勾子函数(生命周期回调函数)，会在特定的时刻调用
+            * 我们在定义组件时，回来特定的生命周期回调函数中做特定的工作
 
 ###  总结
 * speak中的this是谁，得看是怎么调用的
@@ -473,4 +528,5 @@
           ```
 * 原理就是借助了构造器函数、render函数、类本身中的this指向实例，可以有多种解决方法
 * 在条件允许的情况下，尽量避免使用字符串形式的ref，就是能避免就避免，但是特别着急的情况下还是可以放肆一下的
+* 生命周期勾子函数什么时候调用和写代码的顺序是无关的，最先调用的是render()，只要写了React就会适时调用。啥时候是适时呢？比如componentDidMount是在调用render之后调用的
 
