@@ -449,7 +449,7 @@
                     }
                   ```
     * 组件的生命周期，React的声明周期就像在关键的点，调用特殊的函数componentDidMount和componentWillUnmount函数，在函数里面完成特殊的事情
-        * 就像人的一生，
+        * 组件挂载流程，就像人的一生，
             * 出生了 ==> 组件挂载完毕后调用componentDidMount函数
             * 中间学会了很多事 ==> 记录一下
             * 病危了(还没死) ==> 调用componentWillUnmount函数，在里面清除定时器
@@ -499,20 +499,51 @@
                 }
             }
           ```
-        * 理解：
-            * 1.组件从创建到苏王会经历一些特定的阶段
-            * 2.React组件中包含一系列钩子函数(生命周期回调函数)，会在特定的时刻调用
-            * 我们在定义组件时，回来特定的生命周期回调函数中做特定的工作
-        * setState()  --正常更新，是建立在真的修改了里面的数据，才会帮我更新，**前提是```shouldComponentUpdate()```这个阀门要开启**
+            * 理解：
+                * 1.组件从创建到苏王会经历一些特定的阶段
+                * 2.React组件中包含一系列钩子函数(生命周期回调函数)，会在特定的时刻调用
+                * 我们在定义组件时，回来特定的生命周期回调函数中做特定的工作
+        * setState流程  --正常更新，是建立在真的修改了里面的数据，才会帮我更新，**前提是```shouldComponentUpdate()```这个阀门要开启**
             * shouldComponentUpdate()  --这个钩子函数控制组件更新的“阀门”，即使不写底层的React也会帮我补一个，而且返回值为true。但是如果我写了就以我写的为准，我手动写的这个必须要亲自写个返回值，且值为true，要不然后边写多少都白扯
             * componentWillUpdate()  --组件将要更新的钩子
             * componentDidUpdate()  --组件更新完毕的钩子，即使把它写在最前面也不是先调用它的，它肯定是在倒数第二部的时候被调用的
-        * forceUpdate()  --强制更新，是即使没有修改组件里的数据或状态，就是想更新一下，就可以走这条路。不像setState()，需要有shouldComponentUpdate()这个阀门，强制更新里面，因为没有写死，数据或状态修改没修改都可以更新
+        * forceUpdate流程  --强制更新，是即使没有修改组件里的数据或状态，就是想更新一下，就可以走这条路。不像setState()，需要有shouldComponentUpdate()这个阀门，强制更新里面，因为没有写死，数据或状态修改没修改都可以更新
             * ```
                 force=()=>{
                     this.forceUpdate()
                 }
               ```
+        * 父组件render流程
+            * componentWillReceiveProps()，按照流程写完执行，首先会调用render()，**前提是render里写了输出**，**shouldComponentUpdate阀门必须是开启才能正常执行**，然后点击按钮页面会变化，并且后面的钩子函数会按顺序执行，如图(图放在代码下面)：
+                * ```
+                    class B extends React.Component{
+                        // 组件将要接受新的props的钩子
+                        componentWillReceiveProps(props){
+                            console.log('B--componentWillReceiveProps',props);
+
+                        }
+                        shouldComponentUpdate(){
+                            console.log('B--shouldComponentUpdate');
+                            return true
+                        }
+                        // 组件将要更新的钩子
+                        componentWillUpdate(){
+                            console.log('B---componentWillUpdate');
+                        }
+                        // 组件更新完毕的钩子
+                        componentDidUpdate(){
+                            console.log('B---componentDidUpdate');
+                        }
+                        render(){
+                            console.log('B--render');
+                            return (
+                                <div>我是B组件,接收到的游戏是:{this.props.gameName}</div>
+                            )
+                        }
+                    }
+                  ```
+                * ![执行前](images/%E9%A6%96%E5%85%88%E8%B0%83%E7%94%A8render.PNG)
+                * ![执行后](images/gameName%E5%8F%98%E4%BA%86%EF%BC%8C%E9%92%A9%E5%AD%90%E4%BB%AC%E6%89%A7%E8%A1%8C%E4%BA%86.PNG)
 
 ###  总结
 * speak中的this是谁，得看是怎么调用的
