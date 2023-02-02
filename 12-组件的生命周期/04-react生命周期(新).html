@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>02-react生命周期(旧)-父组件render流程</title>
+    <title>04-react生命周期(新)</title>
 </head>
 <body>
     <!-- 准备好一个"容器" -->
@@ -18,22 +18,6 @@
     <script type="text/javascript" src="../js/babel.min.js"></script>
 
     <script type="text/babel">
-        /*
-            1.初始化阶段：由ReactDOM.render()触发，组件第一次挂载  --初次渲染
-                1) constructor()
-                2) componentWillMount()
-                3) render()
-                4) componentDidMount()  -- 常用，
-                        一般在这个钩子中做一些初始化的事，比如：开启定时器，发送网络请求，订阅消息
-            2.更新阶段：由组件内部this.setState()或父组件render触发
-                1) shouldComponentUpdate()
-                2) componentWillUpdate()
-                3) render()  -- 必用
-                4) componentDidUpdate()
-            3.卸载组件：由ReactDOM.unmountComponentAtNode()触发
-                1) componentWillUnmount()  -- 常用，
-                        一般在这个钩子中做一些收尾的事，比如：关闭定时器，取消订阅消息
-         */
         // 创建组件
         class Count extends React.Component{
             // 构造器
@@ -63,7 +47,7 @@
             }
 
             // 组件将要挂载的钩子
-            componentWillMount(){
+            UNSAFE_componentWillMount(){
                 console.log('Count---componentWillMount');
             }
 
@@ -84,7 +68,7 @@
             }
 
             // 组件将要更新的钩子
-            componentWillUpdate(){
+            UNSAFE_componentWillUpdate(){
                 console.log('Count---componentWillUpdate');
             }
 
@@ -131,12 +115,12 @@
         // 子组件B
         class B extends React.Component{
             // 组件将要接受新的props的钩子
-            componentWillReceiveProps(props){
+            UNSAFE_componentWillReceiveProps(props){
                 console.log('B--componentWillReceiveProps',props);
 
             }
-            // 控制组件更新的“阀门”
-            shouldComponentUpdate(){
+             // 控制组件更新的“阀门”
+             shouldComponentUpdate(){
                 console.log('B--shouldComponentUpdate');
                 return true
             }
@@ -148,6 +132,7 @@
             componentDidUpdate(){
                 console.log('B---componentDidUpdate');
             }
+            
             render(){
                 console.log('B--render');
                 return (
@@ -157,7 +142,7 @@
         }
 
         // 渲染组件
-        ReactDOM.render(<A/>,document.getElementById('test'))
+        ReactDOM.render(<Count/>,document.getElementById('test'))
     </script>
 </body>
 </html>

@@ -448,7 +448,7 @@
                         }
                     }
                   ```
-    * 组件的生命周期，React的声明周期就像在关键的点，调用特殊的函数componentDidMount和componentWillUnmount函数，在函数里面完成特殊的事情
+    * 组件的生命周期(旧)，React的声明周期就像在关键的点，调用特殊的函数componentDidMount和componentWillUnmount函数，在函数里面完成特殊的事情
         * 组件挂载流程，就像人的一生，
             * 出生了 ==> 组件挂载完毕后调用componentDidMount函数
             * 中间学会了很多事 ==> 记录一下
@@ -544,6 +544,8 @@
                   ```
                 * ![执行前](images/%E9%A6%96%E5%85%88%E8%B0%83%E7%94%A8render.PNG)
                 * ![执行后](images/gameName%E5%8F%98%E4%BA%86%EF%BC%8C%E9%92%A9%E5%AD%90%E4%BB%AC%E6%89%A7%E8%A1%8C%E4%BA%86.PNG)
+    * 组价的生命周期(新)，相较于旧的生命周期，即将废弃三个Will钩子(componentWillReceiveProps,componentWillMount,componentWillUpdate)，而添加了两个新的钩子(getDerivedStateFromProps,getSnapshotBeforeUpdate)，如图：
+        * ![新react生命周期图](images/04-react%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F(%E6%96%B0).PNG)
 
 ###  总结
 * speak中的this是谁，得看是怎么调用的
