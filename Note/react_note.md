@@ -546,6 +546,15 @@
                 * ![执行后](images/gameName%E5%8F%98%E4%BA%86%EF%BC%8C%E9%92%A9%E5%AD%90%E4%BB%AC%E6%89%A7%E8%A1%8C%E4%BA%86.PNG)
     * 组价的生命周期(新)，相较于旧的生命周期，即将废弃三个Will钩子(componentWillReceiveProps,componentWillMount,componentWillUpdate)，而添加了两个新的钩子(getDerivedStateFromProps,getSnapshotBeforeUpdate)，如图：
         * ![新react生命周期图](images/04-react%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F(%E6%96%B0).PNG)
+            * 新的生命周期(图)里的**React更新DOM和refs**是一个固定的小环节，在这个环节不会有什么输出
+        * getDerivedStateFromProps()，直译为从props得到派生/衍生的状态，但是这种派生状态会导致代码冗余，并组件难以维护，所以，了解即可。
+            * ```
+                static getDerivedStateFromProps(props){
+                    console.log('Count--getDerivedStateFromProps',props);
+                    return props
+                }
+              ```
+            * 加上上面这段代码我的状态值(state值)在任何情况下，都取决于props。无论初始化状态的值或是修改的值都会无效，这适用于极特殊的状态，就是状态值完全取决于props的时候。
 
 ###  总结
 * speak中的this是谁，得看是怎么调用的
