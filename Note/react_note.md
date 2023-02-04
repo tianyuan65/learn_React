@@ -559,7 +559,7 @@
             * snapshot译为快照，按照新react生命周期图中的顺序，这个钩子在render()和componentDidUpdate()之间，但是和getDerivedStateFromProps()一样也需要有返回值，可以是null，也可以是快照值(snapshot value)。这个快照值可以是任何值，如，字符串、数组、对象、函数，都可以
                 * ![getSnapshotBeforeUpdate要有返回值](images/%E6%9B%B4%E6%96%B0%E5%89%8D%E8%8E%B7%E5%8F%96%E5%BF%AB%E7%85%A7%E9%92%A9%E5%AD%90%E4%B9%9F%E9%9C%80%E8%A6%81%E8%BF%94%E5%9B%9E%E5%80%BC.PNG)
             * ![getSnapshotBeforeUpdate运行原理](images/getSnapshotBeforeUpdate%E5%92%8B%E8%BF%90%E8%A1%8C.PNG)
-            * 稍微改进一下，向组件中定义一个props，props命名为count，其值为199。在getDerivedStateFromProps钩子函数中设置一个if语句，当state.count的值为偶数时，输出数字2，返回值为null(意思是在这个钩子函数里传递的state参数不从props中取值)；当state.count的值为奇数时，输出数字199，返回值为props(意思是state值从props中取值)。点击“点我+1”按钮后state值也会随之改变，第一次渲染时，state从构造器里的初始化状态值中取值，所以输出为2，返回值为null；第一次点击后，count值为1，输出199，return props；第二次点击开始，state就会从props中取值，且因为有componentDidUpdate钩子函数中传递之前的props值(preProps)、state值(preState)和快照值(snapshotValue)，所以之后的派生状态值(就是getDerivedStateFromProps里传递的state参数和输出的state值)，就会从props中取值，因此输出数字2，return null。
+            * 稍微改进一下，向组件中定义一个props，props命名为count，其值为199。在getDerivedStateFromProps钩子函数中设置一个if语句，当state.count的值为偶数时，输出数字2，返回值为null(意思是在这个钩子函数里传递的state参数不从props中取值)；当state.count的值为奇数时，输出数字199，返回值为props(意思是state值从props中取值)。点击“点我+1”按钮后state值也会随之改变，第一次渲染时，state从构造器里的初始化状态值中取值，所以输出为2，返回值为null；第一次点击后，count值为1，输出199，return props；第二次点击开始，state就会从props中取值，且因为有componentDidUpdate钩子函数中传递之前的props值(preProps)、state值(preState)和快照值(snapshotValue)，所以之后的派生状态值(就是getDerivedStateFromProps里传递的state参数和输出的state值)，就会从props中取值，因此输出数字2，return null。咋走新来一个文件运行一下。
                 * ```
                     class Count extends React.component{
                         static getDerivedStateFromProps(props,state){
