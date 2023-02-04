@@ -554,7 +554,11 @@
                     return props
                 }
               ```
-            * 加上上面这段代码我的状态值(state值)在任何情况下，都取决于props。无论初始化状态的值或是修改的值都会无效，这适用于极特殊的状态，就是状态值完全取决于props的时候。
+            * 加上上面这段代码我的状态值(state值)在任何情况下，都取决于props。无论初始化状态的值或是修改的值都会无效，这适用于极特殊的状态，就是状态值完全取决于props的时候。若state的值在任何时候都取决于props，那么可以使用(不是必须)getDerivedStateFromProps
+        * getSnapshotBeforeUpdate(),直译为更新前得到快照
+            * snapshot译为快照，按照新react生命周期图中的顺序，这个钩子在render()和componentDidUpdate()之间，但是和getDerivedStateFromProps()一样也需要有返回值，可以是null，也可以是快照值(snapshot value)。这个快照值可以是任何值，如，字符串、数组、对象、函数，都可以
+                * ![getSnapshotBeforeUpdate要有返回值](images/%E6%9B%B4%E6%96%B0%E5%89%8D%E8%8E%B7%E5%8F%96%E5%BF%AB%E7%85%A7%E9%92%A9%E5%AD%90%E4%B9%9F%E9%9C%80%E8%A6%81%E8%BF%94%E5%9B%9E%E5%80%BC.PNG)
+            * ![getSnapshotBeforeUpdate运行原理](images/getSnapshotBeforeUpdate%E5%92%8B%E8%BF%90%E8%A1%8C.PNG)
 
 ###  总结
 * speak中的this是谁，得看是怎么调用的
