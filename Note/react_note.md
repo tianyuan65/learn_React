@@ -559,6 +559,53 @@
             * snapshot译为快照，按照新react生命周期图中的顺序，这个钩子在render()和componentDidUpdate()之间，但是和getDerivedStateFromProps()一样也需要有返回值，可以是null，也可以是快照值(snapshot value)。这个快照值可以是任何值，如，字符串、数组、对象、函数，都可以
                 * ![getSnapshotBeforeUpdate要有返回值](images/%E6%9B%B4%E6%96%B0%E5%89%8D%E8%8E%B7%E5%8F%96%E5%BF%AB%E7%85%A7%E9%92%A9%E5%AD%90%E4%B9%9F%E9%9C%80%E8%A6%81%E8%BF%94%E5%9B%9E%E5%80%BC.PNG)
             * ![getSnapshotBeforeUpdate运行原理](images/getSnapshotBeforeUpdate%E5%92%8B%E8%BF%90%E8%A1%8C.PNG)
+            * 例子：
+                * ```
+                    class NewsList extends React.Component{
+                        // 初始化状态
+                        state={newsArr:[]}
+
+                        componentDidMount(){
+                            setInterval(()=>{
+                                // 获取原状态
+                                const {newsArr}=this.state
+                                // 模拟一条新闻
+                                const news='新闻'+(newsArr.length+1)
+                                // 更新状态  新生成的状态,之前的状态
+                                this.setState({newsArr:[news,...newsArr]})
+                            },1000)
+                        }
+
+                        render(){
+                            return (
+                                <div className="list" ref="list">
+                                    {
+                                        this.state.newsArr.map((n,index)=>{
+                                            return <div key={index} className="news">{n}</div>
+                                        })
+                                    }
+                                    
+                                </div>
+                            )
+                        }
+
+                        getSnapshotBeforeUpdate(){
+                            return this.refs.list.scrollHeight
+                        }
+
+                        componentDidUpdate(preProps,preState,height){
+                            this.refs.list.scrollTop += this.refs.list.scrollHeight-height
+                        }
+                    }
+                ```
+        * 重要的钩子
+            * 1. render:初始化渲染或更新渲染调用
+            * 2. componentDidMount:开启监听，发送ajax请求
+            * 3. componentWillUnmount:做一些收尾工作，如：清除定时器
+        * 即将废弃的钩子。最新版需要加上UNSAFE_前缀才可以使用，以后可能会彻底废弃，不建议使用
+            * 1. componentWillMount
+            * 2. componentWillReceivedProps
+            * 3. componentWillUpdate
 
 ###  总结
 * speak中的this是谁，得看是怎么调用的
