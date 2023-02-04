@@ -559,7 +559,34 @@
             * snapshot译为快照，按照新react生命周期图中的顺序，这个钩子在render()和componentDidUpdate()之间，但是和getDerivedStateFromProps()一样也需要有返回值，可以是null，也可以是快照值(snapshot value)。这个快照值可以是任何值，如，字符串、数组、对象、函数，都可以
                 * ![getSnapshotBeforeUpdate要有返回值](images/%E6%9B%B4%E6%96%B0%E5%89%8D%E8%8E%B7%E5%8F%96%E5%BF%AB%E7%85%A7%E9%92%A9%E5%AD%90%E4%B9%9F%E9%9C%80%E8%A6%81%E8%BF%94%E5%9B%9E%E5%80%BC.PNG)
             * ![getSnapshotBeforeUpdate运行原理](images/getSnapshotBeforeUpdate%E5%92%8B%E8%BF%90%E8%A1%8C.PNG)
-            * 例子：
+            * 稍微改进一下，向组件中定义一个props，props命名为count，其值为199。在getDerivedStateFromProps钩子函数中设置一个if语句，当state.count的值为偶数时，输出数字2，返回值为null(意思是在这个钩子函数里传递的state参数不从props中取值)；当state.count的值为奇数时，输出数字199，返回值为props(意思是state值从props中取值)。点击“点我+1”按钮后state值也会随之改变，第一次渲染时，state从构造器里的初始化状态值中取值，所以输出为2，返回值为null；第一次点击后，count值为1，输出199，return props；第二次点击开始，state就会从props中取值，且因为有componentDidUpdate钩子函数中传递之前的props值(preProps)、state值(preState)和快照值(snapshotValue)，所以之后的派生状态值(就是getDerivedStateFromProps里传递的state参数和输出的state值)，就会从props中取值，因此输出数字2，return null。
+                * ```
+                    class Count extends React.component{
+                        static getDerivedStateFromProps(props,state){
+                            console.log('Count--getDerivedStateFromProps',props,state);
+                            if (state.count %2 ===0){
+                                console.log(2);
+                                return null
+                            }else{
+                                console.log(199);
+                                return props
+                            }
+                            // return null
+                        }
+                        getSnapshotBeforeUpdate(){
+                            console.log('getSnapshotBeforeUpdate');
+                            return 'atguigu'
+                        }
+                        // 组件更新完毕的钩子
+                        componentDidUpdate(preProps,preState,snapshotValue){
+                            console.log('Count---componentDidUpdate',preProps,preState,snapshotValue);
+                        }
+                    }
+                    // 渲染组件
+                    ReactDOM.render(<Count count={199}/>,document.getElementById('test'))
+                    
+                ```
+            * 例子：每隔一秒就会在容器中有新的新闻加载出来，但是我想要看某一个新闻，滚动到那个新闻后想要让滚动条停在想看的新闻的位置上。但是新的新闻必须继续加载出来，并且不会将我定位好的新闻的位置顶替上去
                 * ```
                     class NewsList extends React.Component{
                         // 初始化状态
@@ -606,6 +633,7 @@
             * 1. componentWillMount
             * 2. componentWillReceivedProps
             * 3. componentWillUpdate
+    * DOM的Diffing算法
 
 ###  总结
 * speak中的this是谁，得看是怎么调用的

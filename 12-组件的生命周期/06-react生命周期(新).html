@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>05-react生命周期(新)</title>
+    <title>06-react生命周期(新)</title>
 </head>
 <body>
     <!-- 准备好一个"容器" -->
@@ -48,7 +48,6 @@
 
             // 若state的值在任何时候都取决于props，那么可以使用(不是必须)getDerivedStateFromProps
             static getDerivedStateFromProps(props,state){
-                console.log('Count--getDerivedStateFromProps',props,state);
                 return null
             }
 
