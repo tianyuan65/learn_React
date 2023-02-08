@@ -651,6 +651,27 @@
             * 第二步，切换到想创建项目的目录，使用命令：create-react-app react_staging
             * 第三步，进入项目文件夹：cd hello-react
             * 第四步，启动项目：npm start
+        * 3.1.
+            * public---静态资源文件夹
+                * favicon.icon--网站页签图标
+                * **index.html--主页面**
+                * logo192.ppng--logo图
+                * logo512.png--logo图
+                * manifest.json--应用加壳的配置文件
+                * robots.txt--爬虫协议文件
+            * src---源码文件夹
+                * App.css--App组件的样式
+                * **App.js--App组件**
+                * app.test.js--用于给App做测试
+                * index.css--样式
+                * **index.js--入口文件**
+                    * index.js中，渲染组件的操作中，<APP/>的外侧为什么要包裹<React.StrictMode></React.StrictMode>？
+                        * 能检查APP以及APP里所有子组件写的东西是否合理
+                * logo.svg--logo图
+                * reportWebVitals.js文件是干嘛的？
+                    * 是用于记录页面上的性能的，里面用上了web-vitals这个库
+                * setupTest.js
+                    * 用于应用的整体测试，也就是用于组件测试，或者是某一个模块/单元的测试，需要有jest-dom库做支持
 
 ###  总结
 * speak中的this是谁，得看是怎么调用的
@@ -678,4 +699,6 @@
 * 在条件允许的情况下，尽量避免使用字符串形式的ref，就是能避免就避免，但是特别着急的情况下还是可以放肆一下的
 * 生命周期勾子函数什么时候调用和写代码的顺序是无关的，最先调用的是render()，只要写了React就会适时调用。啥时候是适时呢？比如componentDidMount是在调用render之后调用的
 * 只有真实DOM被渲染到页面上，用户才可以进行输入内容等操作，虚拟DOM身上属性很少，比如没有value值，而真实DOM有，只有在真实DOM中才可以留下和保存用户输入的内容
+* react脚手架文件介绍里，文件执行顺序
+    * 先来到src/index.js中引入资源文件，渲染App组件，随后到public/index.html中找root节点，保存到root容器中，渲染组件的代码执行完后，App组件就会在页面中展示。最后各种logo图和图标、reportWebVitals.js文件以及setupTest.js文件等等其他都是周边的，需要的话添加，不需要就没必要
 
