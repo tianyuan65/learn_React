@@ -744,3 +744,12 @@
     * 如图所示，List中的状态帮我保存一堆要做的事。Header组件把输入的数据交给List组件，List会把这些数据放在自己的状态(state)里，随后状态会驱动页面的展示，打包后会在页面中显示
     * ![状态中数据驱动页面的展示](images/%E7%8A%B6%E6%80%81%E4%B8%AD%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E9%A1%B5%E9%9D%A2%E5%B1%95%E7%A4%BA.PNG)
 * 两个组件之间传递数据就叫组件间通信，如果子组件想给父组件传递数据，父组件就需要先前通过props给子组件传递一个函数，而子组件在适当的时候，也就是想要给父组件传递数据时，调用一下这个函数即可 
+    * 父组件(外壳组件)--App.jsx
+    * 子组件1--Header.jsx
+    * 子组件2--List.jsx
+    * 整体的交互模型是这样的，App组件里存储着一堆要做的事，这些事传给了List，App又给Header传递了一个函数，这个函数后续能接收todoObj。Header组件会在合适的时候调用App这个父组件传递的函数，把todoObj交给App，App拿到todoObj之后会放在自己的状态里，就引起了App状态的更改，App状态一更改，App里的render就会重新被调用，这样就会引发App的子组件List的重新渲染，然后List里的内容就会有所变化。
+* 状态在哪里，操作状态的方法就在哪里
+    * 祖先组件--App.jsx
+    * 父组件--List.jsx
+    * 子组件--Item.jsx
+    * 勾选、取消勾选某一个todo的操作是通过改变单个的input节点中的done的状态来实现的，因为Item无法向List或App传递数据，所以父组件(List)需要给Item中传递一个函数，就是handleCheck。App又需要给List传递函数updateTodo，所以合适的时候回按顺序调用，当勾选或取消勾选某个todo的时候，首先执行handleCheck函数，随后执行updateTodo函数，进入匹配处理数据的判断中，结果相同，返回新的todoObj和更改后的done值，如果不同，就返回原来的值
