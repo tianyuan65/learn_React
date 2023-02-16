@@ -753,3 +753,4 @@
     * 父组件--List.jsx
     * 子组件--Item.jsx
     * 勾选、取消勾选某一个todo的操作是通过改变单个的input节点中的done的状态来实现的，因为Item无法向List或App传递数据，所以父组件(List)需要给Item中传递一个函数，就是handleCheck。App又需要给List传递函数updateTodo，所以合适的时候回按顺序调用，当勾选或取消勾选某个todo的时候，首先执行handleCheck函数，随后执行updateTodo函数，进入匹配处理数据的判断中，结果相同，返回新的todoObj和更改后的done值，如果不同，就返回原来的值
+* defaultChecked 只在第一次指定的时候有作用，第二次开始就没作用了
