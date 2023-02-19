@@ -13,9 +13,11 @@ export default class List extends Component {
   render() {
     // 从App接收props
     const {todos,updateTodo,deleteTodo}=this.props
+    console.log('123');
     return (
       <ul className="todo-main">
         {
+          
           todos.map(todo=>{
             return <Item key={todo.id} {...todo} updateTodo={updateTodo} deleteTodo={deleteTodo}/>
           })

@@ -25,10 +25,13 @@ export default class App extends Component {
   addTodo=(todoObj)=>{
     // 获取原todos
     const {todos}=this.state
+    console.log(typeof todoObj);
     // 追加一个todo  新传过来的todo数据,原来数组里的数据
-    const {newTodos}=[todoObj,...todos]
+    const newTodos=[todoObj,...todos]
+    console.log(newTodos instanceof Array);
     // 更新状态
     this.setState({todos:newTodos})
+    console.log(this.state);
   }
 
   // updateTodo用于更新一个todo对象
