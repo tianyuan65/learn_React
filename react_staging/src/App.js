@@ -9,10 +9,11 @@ import Footer from './components/Footer/Footer'
 import './App.css'
 
 export default class App extends Component {
-  // 状态在哪里，操作状态的方法就在哪里
+  // 状态在哪里，操作状态的方法就在哪里，所以这个组件里有一堆函数，都是操作状态的方法
 
   // 初始化状态
   state={todos:[
+    // 如下这四个都是todo对象
     {id:'001',name:'吃饭',done:true},
     {id:'002',name:'睡觉',done:false},
     {id:'003',name:'打游戏',done:true},

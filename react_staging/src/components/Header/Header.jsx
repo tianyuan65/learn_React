@@ -21,7 +21,7 @@ export default class Header extends Component {
       alert('输入不能为空')
       return
     }
-    // 准备好一个todo对象
+    // 准备好一个todo对象  id值,用户输入的值,是否勾选
     const todoObj={id:nanoid(),name:target.value,done:false}
     // 将todoObj传递给App
     this.props.addTodo(todoObj)
@@ -32,6 +32,7 @@ export default class Header extends Component {
   render() {
     return (
       <div className="todo-header">
+        {/* 绑定事件的元素和要操作的元素是同一个元素时，就不用ref，用事件对象(event) */}
         <input onKeyUp={this.handleKeyUp} type="text" placeholder="请输入你的任务名称，按回车键确认"/>
       </div>
     )
