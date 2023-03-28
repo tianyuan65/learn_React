@@ -640,9 +640,9 @@
     * 3.1 使用create-react-app创建react应用
         * 3.1.1 react脚手架
             * 1. 脚手架：让程序员快速、方便地编写一个基于某种技术(Angular,React,Vue)的应用/模板项目。
-                * 1) 包含了所有需要的配置(语法检查、jsx编译、devServer...)，都是webpack相关的东西。
-                * 2) 下载好了所有相关的依赖
-                * 3) 可以直接运行一个简单效果
+                * 1. 包含了所有需要的配置(语法检查、jsx编译、devServer...)，都是webpack相关的东西。
+                * 2. 下载好了所有相关的依赖
+                * 3. 可以直接运行一个简单效果
             * 2. react提供了一个用于创建react项目的脚手架库：create-react-app
             * 3. 项目的整体技术架构为：react + webpack + es6 + eslint
             * 4. 使用脚手架开发的项目的特点：模块化、组件化、工程化
@@ -719,18 +719,18 @@
                 * 勾选、取消勾选某一个todo的操作是通过改变单个的input节点中的done的状态来实现的，因为Item无法向List或App传递数据，所以父组件(List)需要给Item中传递一个函数，就是handleCheck。App又需要给List传递函数updateTodo，所以合适的时候回按顺序调用，当勾选或取消勾选某个todo的时候，首先执行handleCheck函数，随后执行updateTodo函数，进入匹配处理数据的判断中，结果相同，返回新的todoObj和更改后的done值，如果不同，就返回原来的值
                     * ![updateTodo执行原理](images/updateTodo%E4%B8%BA%E5%95%A5%E8%BF%99%E6%A0%B7%E5%86%99.PNG)
 
-* **第四章：reactajax**
+* **第四章：react ajax**
     * 4.1 理解
         * 4.1.1 前置说明
-            * 1. React本身只关注于界面，并不包含发送ajax请求的代码(如：React.ajax(url) 这种是不可能存在的)
+            * 1. React本身只关注于界面，并不包含发送ajax请求的代码(如：React.get/post(url) 这种是不可能存在的)
             * 2. 前端应用需要通过ajax请求与后台进行交互(json数据)
-            * 3. react应用中需要继承第三方ajax库(或自己封装，但是自己封装用得少，一般用第三方的)
+            * 3. react应用中需要继承第三方ajax库或自己封装(但是自己封装用得少，一般用第三方的ajax)
         * 4.1.2 常用的ajax请求库
             * 1. jQuery：比较重，如果需要另外引入，不建议使用
-            * 2. axios：轻量级，建议使用
-                * 1) 封装XMLHTTPRequest对象的ajax
-                * 2) promise风格
-                * 3) 可以用在浏览器端和node服务器端
+            * 2. axios：轻量级，建议使用axios，发送网络请求
+                * 1. 封装XMLHTTPRequest对象的ajax
+                * 2. promise风格
+                * 3. 可以用在浏览器端和node服务器端
     * 4.2 axios
         * 4.2.1 文档
 
