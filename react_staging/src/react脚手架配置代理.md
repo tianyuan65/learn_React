@@ -21,6 +21,11 @@
                     // 请求转发给哪一个端口
                     target:'http://localhost:5000',
                     // 控制服务器收到的请求头中Host的值，就是控制服务器知道请求是从哪儿发出去的，默认值为false
+                    /*
+                      changeOrigin设置为true时，服务器收到的请求头中的host为：localhost:5000
+                      changeOrigin设置为false时，服务器收到的请求头中的host为：localhost:3000
+                      changeOrigin默认值为false，但我们一般将changeOrigin值设为true
+                     */
                     changeOrigin:true,
                     // 如果上面没有/api1，意味着无法给5000发送请求，但加了/api1，路径就不对了，所以需要在这一步把'^/api1'改成空串
                     pathRewrite:{'^/api1':''}  //重写请求路径(必须写，要不然请求无法发送)
