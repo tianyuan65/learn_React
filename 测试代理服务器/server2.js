@@ -1,7 +1,7 @@
 const express=require ('express')
 const app=express()
 
-app.arguments((request,response,next)=>{
+app.use((request,response,next)=>{
     console.log('有人请求服务器2了');
     next()
 })
@@ -16,5 +16,5 @@ app.get('bags',(request,response)=>{
 })
 
 app.listen(5001,(err)=>{
-    if(!err) console.log('服务器2启动了,请求包信息地址为:http://localhost:5000/students');
+    if(!err) console.log('服务器2启动了,请求包信息地址为:http://localhost:5001/bags');
 })
