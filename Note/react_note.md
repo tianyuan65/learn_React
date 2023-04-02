@@ -733,6 +733,10 @@
                 * 3. 可以用在浏览器端和node服务器端
     * 4.2 axios
         * 4.2.1 文档
+            * https://github.com/axios/axios
+        * 4.2.2 相关API
+            * 1. GET请求
+            * 2. POST请求
 
 ###  总结
 * speak中的this是谁，得看是怎么调用的
@@ -768,3 +772,16 @@
 * 什么是组件？
     * 实现页面局部功能代码和资源的集合就是组件
 * defaultChecked 只在第一次指定的时候有作用，第二次开始就没作用了
+* 连续解构赋值
+    * ```
+        let obj={a:{b:{c:1}}}
+        let obj2={a:{b:1}}
+        console.log(obj.a.b.c)  //1
+
+        const {a:{b:{c}}}=obj
+        console.log(c)  //1
+
+        //连续解构赋值并重命名
+        const {a:{b:data}}=obj2
+        console.log(data)  //1
+      ```
