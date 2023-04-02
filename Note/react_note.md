@@ -737,6 +737,16 @@
         * 4.2.2 相关API
             * 1. GET请求
             * 2. POST请求
+    * 4.3 案例--GitHub用户搜索
+        * 4.3.1 效果，看C:\Users\田园\Desktop\尚硅谷React全家桶教程（天禹老师主讲）\react全家桶资料\04_静态页面\users_page\index.html
+    * 4.4 消息订阅-发布机制
+        * 1. 工具库：PubSubJS
+        * 2. 下载：npm i pubsub-js --save
+        * 3. 使用
+            * 1. import PubSub from 'pubsub-js' // 引入
+            * 2. PubSub.subscribe('delete',function(data){}) //订阅
+            * 3. PubSub.publish('delete',data) //发布消息
+            * 简单总结就是，有A、B两个组件，A组件想要收到B组件发布的消息，就是B给A提供东西，**A就需要在自己的组件内部订阅消息**，商量好消息的名字叫什么。在B组件当中通过某种方法**发布消息**，发布消息的同时，**把要传递的数据一起携带过去**。因为在A组件中订阅了消息，B组件中的数据就会传递到A组件中
 
 ###  总结
 * speak中的this是谁，得看是怎么调用的
