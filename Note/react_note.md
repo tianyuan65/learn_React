@@ -101,7 +101,7 @@
     * **组件实例的三大属性**
         * 1.state 
             * state是组件对象最重要的属性，值是对象(可以包含多个key-value的组合)，记住！！！！绝对不可能是数组
-            * 组价被称为“状态机”，通过更新组件的state来更新对应的页面显示(重新渲染组件)
+            * 组价被称为**状态机**，通过更新组件的state来更新对应的页面显示(重新渲染组件)
             * **强烈注意**
                 * 组件中的render方法中的this为组件实例对象
                 * 组件自定义的方法中this为undefined，如何解决？
@@ -182,8 +182,7 @@
                         //2.渲染组件到页面
                         ReactDOM.render(<Weather/>,document.getElementById('test'))
                     </script>
-
-                ```
+                  ```
                 * 可以看出构造器没了，直接向Weather的实例对象身上添加了属性，名为state，值为一个对象；且自定义的方法，写成了赋值语句 + 箭头函数的形式，
                     * 因为箭头函数有一大特点，就是没有自己的this，但是如果要在箭头函数里使用了this关键字的话，会找其外层函数的this作为箭头函数的this，在上面的代码中，箭头函数内打印出来的this就是Weather的实例，如图：
                         * ![箭头函数内打印出来的this指向，很明显是组件Weather的实例](images/%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0%E7%9A%84this.png)
@@ -193,7 +192,7 @@
                 * 2）组件标签的所有属性都保存在props中
             * 作用：
                 * 1）通过标签属性从组件外向组件内传递变化的数据/props主要用来传递数据，比如组件之间进行传值
-                * 2）注意：组件的内部不要修改props数据
+                * 2）注意：组件的内部不要修改props数据，也不可改，因为props是只读的
             * 基本使用：
                 * ```
                     <script type="text/babel">
@@ -219,7 +218,7 @@
                         const p={name:'老司',gender:'female',age:24}
                         ReactDOM.render(<Person {...p} />,document.getElementById('test3'))
                     </script>
-                ```
+                  ```
             * 对props进行限制
                 * ```
                     <script type="text/babel">
@@ -264,9 +263,8 @@
                         function speak() {
                             console.log('我说话了');
                         }
-                        
                     </script>
-                ```
+                  ```
             * props简写方式
                 * ```
                     <script type="text/babel">
@@ -314,7 +312,7 @@
                             console.log('我说话了');
                         }
                     </script>
-                ```
+                  ```
             * 操作：
                 * 扩展属性：将对象的所有属性通过props传递
                     * ```<Person {...p} />```
@@ -325,7 +323,7 @@
                             gender:PropTypes.string,  //限制gender为字符串
                             age:PropTypes.number,  //限制age为数值
                         }
-                    ```
+                      ```
                 * 组件类的构造器
                     * ```
                         constructor(props){
@@ -336,7 +334,7 @@
                                 // 如果想要在构造器内使用this.props的方式取值，就需要向构造器和super中传递props参数
                             console.log('constructor',this.props);  //constructor Object
                         }
-                    ```
+                      ```
         * 3.refs 
             * 可以理解为打标识。不需要写id，最终会收集所有以ref为标识的标签，到refs属性中，收集之后的ref，不是虚拟DOM，而是该虚拟DOM转成真实DOM之后的节点
             * 字符串形式的refs
@@ -415,7 +413,7 @@
                 * ```用户名：<input onChange={this.saveFormData('username')} type="text" name="usrename"/>```
                 * ```用户名：<input onChange={this.saveFormData} type="text" name="usrename"/>```这样才是将saveFormData函数交给onChange做回调
             * 不用函数柯里化的实现
-                * onchange需要一个函数作为回调，React就会，调用函数，传入event参数，通过event.target.value就可以取到值，在下面的箭头函数中调用了this.saveFormData，在这里没用柯里化，但是也实现了
+                * onchange需要一个函数作为回调，React就会调用函数，传入event参数，通过event.target.value就可以取到值，在下面的箭头函数中调用了this.saveFormData，在这里没用柯里化，但是也实现了
                     * ```
                         class Login extends React.Component{
                             // 初始化状态
@@ -426,10 +424,9 @@
 
                             // 保存表单数据到状态中
                             saveFormData=(dataType,event)=>{
-                                    this.setState({[dataType]:event.target.value})
-                                }
+                                this.setState({[dataType]:event.target.value})
                             }
-
+                            
                             // 表单提交的回调
                             handleSubmit=(event)=>{
                                 event.preventDefault()  //阻止表单提交
@@ -447,8 +444,8 @@
                                 )
                             }
                         }
-                    ```
-        * 组件的生命周期(旧)，React的声明周期就像在关键的点，调用特殊的函数componentDidMount和componentWillUnmount函数，在函数里面完成特殊的事情
+                      ```
+        * 组件的生命周期(旧)，React的s生命周期就像在关键的点，调用特殊的函数componentDidMount和componentWillUnmount函数，在函数里面完成特殊的事情
             * 组件挂载流程，就像人的一生，
                 * 出生了 ==> 组件挂载完毕后调用componentDidMount函数
                 * 中间学会了很多事 ==> 记录一下
@@ -498,11 +495,11 @@
                         )
                     }
                 }
-            ```
+              ```
                 * 理解：
-                    * 1.组件从创建到苏王会经历一些特定的阶段
+                    * 1.组件从创建到死亡会经历一些特定的阶段
                     * 2.React组件中包含一系列钩子函数(生命周期回调函数)，会在特定的时刻调用
-                    * 我们在定义组件时，回来特定的生命周期回调函数中做特定的工作
+                    * 我们在定义组件时，会来特定的生命周期回调函数中做特定的工作
             * setState流程  --正常更新，是建立在真的修改了里面的数据，才会帮我更新，**前提是```shouldComponentUpdate()```这个阀门要开启**
                 * shouldComponentUpdate()  --这个钩子函数控制组件更新的“阀门”，即使不写底层的React也会帮我补一个，而且返回值为true。但是如果我写了就以我写的为准，我手动写的这个必须要亲自写个返回值，且值为true，要不然后边写多少都白扯
                 * componentWillUpdate()  --组件将要更新的钩子
@@ -512,7 +509,7 @@
                     force=()=>{
                         this.forceUpdate()
                     }
-                ```
+                  ```
             * 父组件render流程
                 * componentWillReceiveProps()，按照流程写完执行，首先会调用render()，**前提是render里写了输出**，**shouldComponentUpdate阀门必须是开启才能正常执行**，然后点击按钮页面会变化，并且后面的钩子函数会按顺序执行，如图(图放在代码下面)：
                     * ```
@@ -541,19 +538,19 @@
                                 )
                             }
                         }
-                    ```
+                      ```
                     * ![执行前](images/%E9%A6%96%E5%85%88%E8%B0%83%E7%94%A8render.PNG)
                     * ![执行后](images/gameName%E5%8F%98%E4%BA%86%EF%BC%8C%E9%92%A9%E5%AD%90%E4%BB%AC%E6%89%A7%E8%A1%8C%E4%BA%86.PNG)
         * 组价的生命周期(新)，相较于旧的生命周期，即将废弃三个Will钩子(componentWillReceiveProps,componentWillMount,componentWillUpdate)，而添加了两个新的钩子(getDerivedStateFromProps,getSnapshotBeforeUpdate)，如图：
             * ![新react生命周期图](images/04-react%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F(%E6%96%B0).PNG)
                 * 新的生命周期(图)里的**React更新DOM和refs**是一个固定的小环节，在这个环节不会有什么输出
-            * getDerivedStateFromProps()，直译为从props得到派生/衍生的状态，但是这种派生状态会导致代码冗余，并组件难以维护，所以，了解即可。
+            * getDerivedStateFromProps()，直译为从props得到派生/衍生的状态，但是这种派生状态会导致代码冗余，且组件难以维护，所以，了解即可。
                 * ```
                     static getDerivedStateFromProps(props){
                         console.log('Count--getDerivedStateFromProps',props);
                         return props
                     }
-                ```
+                  ```
                 * 加上上面这段代码我的状态值(state值)在任何情况下，都取决于props。无论初始化状态的值或是修改的值都会无效，这适用于极特殊的状态，就是状态值完全取决于props的时候。若state的值在任何时候都取决于props，那么可以使用(不是必须)getDerivedStateFromProps
             * getSnapshotBeforeUpdate(),直译为更新前得到快照
                 * snapshot译为快照，按照新react生命周期图中的顺序，这个钩子在render()和componentDidUpdate()之间，但是和getDerivedStateFromProps()一样也需要有返回值，可以是null，也可以是快照值(snapshot value)。这个快照值可以是任何值，如，字符串、数组、对象、函数，都可以
@@ -583,9 +580,8 @@
                             }
                         }
                         // 渲染组件
-                        ReactDOM.render(<Count count={199}/>,document.getElementById('test'))
-                        
-                    ```
+                        ReactDOM.render(<Count count={199}/>,document.getElementById('test'))    
+                      ```
                 * 例子：每隔一秒就会在容器中有新的新闻加载出来，但是我想要看某一个新闻，滚动到那个新闻后想要让滚动条停在想看的新闻的位置上。但是新的新闻必须继续加载出来，并且不会将我定位好的新闻的位置顶替上去
                     * ```
                         class NewsList extends React.Component{
@@ -716,7 +712,7 @@
                 * 祖先组件--App.jsx
                 * 父组件--List.jsx
                 * 组件--Item.jsx
-                * 勾选、取消勾选某一个todo的操作是通过改变单个的input节点中的done的状态来实现的，因为Item无法向List或App传递数据，所以父组件(List)需要给Item中传递一个函数，就是handleCheck。App又需要给List传递函数updateTodo，所以合适的时候回按顺序调用，当勾选或取消勾选某个todo的时候，首先执行handleCheck函数，随后执行updateTodo函数，进入匹配处理数据的判断中，结果相同，返回新的todoObj和更改后的done值，如果不同，就返回原来的值
+                * 勾选、取消勾选某一个todo的操作是通过改变单个的input节点中的done的状态来实现的，因为Item无法向List或App传递数据，所以父组件(List)需要给Item中传递一个函数，就是handleCheck。App又需要给List传递函数updateTodo，所以合适的时候会按顺序调用，当勾选或取消勾选某个todo的时候，首先执行handleCheck函数，随后执行updateTodo函数，进入匹配处理数据的判断中，结果相同，返回新的todoObj和更改后的done值，如果不同，就返回原来的值
                     * ![updateTodo执行原理](images/updateTodo%E4%B8%BA%E5%95%A5%E8%BF%99%E6%A0%B7%E5%86%99.PNG)
 
 * **第四章：react ajax**
@@ -747,6 +743,7 @@
             * 2. PubSub.subscribe('delete',function(data){}) //订阅
             * 3. PubSub.publish('delete',data) //发布消息
             * 简单总结就是，有A、B两个组件，A组件想要收到B组件发布的消息，就是B给A提供东西，**A就需要在自己的组件内部订阅消息**，商量好消息的名字叫什么。在B组件当中通过某种方法**发布消息**，发布消息的同时，**把要传递的数据一起携带过去**。因为在A组件中订阅了消息，B组件中的数据就会传递到A组件中
+    * 4.5 fetch
 
 ###  总结
 * speak中的this是谁，得看是怎么调用的

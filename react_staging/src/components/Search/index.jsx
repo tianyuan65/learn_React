@@ -13,7 +13,7 @@ export default class Search extends Component {
       // this.props.updateAppState({isFirst:false,isLoading:true})
       PubSub.publish({isFirst:false,isLoading:true})
       // 发送网络请求
-      axios.get(`/api1/search/users?q=${keyWord}`).then(
+      axios.get(`/api1/search/users2?q=${keyWord}`).then(
           response=>{
             // 请求成功后通知List更新状态
             // this.props.updateAppState({isLoading:false,users:response.data.items})
@@ -39,3 +39,5 @@ export default class Search extends Component {
     )
   }
 }
+
+
