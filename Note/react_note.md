@@ -756,11 +756,11 @@
                     try {
                         const response=await fetch(`/api1/search/users2?q=${keyWord}`)
                         const data=await response.json()
-                        PubSub.publish({isFirst:false,users:data.items})
+                        PubSub.publish({isLoading:false,users:data.items})
                         console.log(data);
                     } catch (error) {
                         console.log('请求出错',error);
-                        PubSub.publish({isFirst:false,err:error.message})
+                        PubSub.publish({isLoading:false,err:error.message})
                     }
                   ```
             * 2. POST请求
@@ -839,9 +839,14 @@
                         path: "/about"
                         url: "/about"
                       ```
-        * 5.4.2 介绍NavLink标签
-            * 想要点击导航链接后，导航链接高亮，表示被选择，需要在Link标签的className中追加active类名，表示点击哪一个导航就发亮。想要这样的效果还需要创建一个样式文件，并引入，比较麻烦。此时把两个Link标签替换为NavLink标签，NavLink标签的设计理念碰巧就是给正在被点击的那一个链接追加active样式类名，且可以在NavLink标签里多追加一个属性名为activeClassName的属性。在public/index.html文件中添加一个样式名为atguigu的样式，但是之前引入的bootstrap.css的权重比较重，给atguigu的样式添加```!important```，来提高atguigu样式的权重。给两个NavLink标签添加```activeClassName="atguigu"```属性和样式，表示点击哪一个链接就给它追加一个样式名为atguigu的样式。打包后，到页面控制台在元素查看时，点击哪一个链接，```activeClassName="atguigu"```就会被追加到那一个NavLink标签中
-            * ![点击哪一个导航链接，atguigu样式就在哪儿](images/%E7%82%B9%E5%93%AA%E4%B8%AAatguigu%E7%9A%84%E6%A0%B7%E5%BC%8F%E5%B0%B1%E5%9C%A8%E5%93%AA%E9%87%8C.PNG)
+        * 5.4.2 NavLink标签
+            * 1. 想要点击导航链接后，导航链接高亮，表示被选择，需要在Link标签的className中追加active类名，表示点击哪一个导航就发亮。想要这样的效果还需要创建一个样式文件，并引入，比较麻烦。此时把两个Link标签替换为NavLink标签，NavLink标签的设计理念碰巧就是给正在被点击的那一个链接追加active样式类名，且可以在NavLink标签里多追加一个属性名为activeClassName的属性。在public/index.html文件中添加一个样式名为atguigu的样式，但是之前引入的bootstrap.css的权重比较重，给atguigu的样式添加```!important```，来提高atguigu样式的权重。给两个NavLink标签添加```activeClassName="atguigu"```属性和样式，表示点击哪一个链接就给它追加一个样式名为atguigu的样式。打包后，到页面控制台在元素查看时，点击哪一个链接，```activeClassName="atguigu"```就会被追加到那一个NavLink标签中
+                * ![点击哪一个导航链接，atguigu样式就在哪儿](images/%E7%82%B9%E5%93%AA%E4%B8%AAatguigu%E7%9A%84%E6%A0%B7%E5%BC%8F%E5%B0%B1%E5%9C%A8%E5%93%AA%E9%87%8C.PNG)
+            * 2. 封装NavLink
+                * 当导航区里有很多选项，就需要写很多NavLink标签，此时NavLink标签中重复的属性可以通过封装NavLink来简写，以免代码冗余。
+                * 定义一个组件MyNavLink，引入到App中，写入名为MyNavLink的标签，并在标签中添加必要的属性，例如```to="/about"```。回到MyNavLink组建中，想要实现和前面一样的展示效果，需要对NavLink二度封装，引入'react-route-dom'中NavLink必要的、重复的属性```activeClassName="atguigu" className="list-group-item"```。至于其他想要追加的属性，标签内的标签属性可以通过props来传递其数据或状态，但标签体没有特意说过，其实标签体内容也是一种特殊的标签属性。在控制台查看时，可以看到两个标签里所有的属性输出了，其中标签体内容的key的名字我没有指定，他们给指定了就叫children。且在MyNavLink/index.jsx中写标签体内容时不一定要这么写，```<NavLink activeClassName="atguigu" className="list-group-item" {...this.props}>{this.props.children}</NavLink>```。可以把标签体内容配在children这个标签属性中也是可以的,```<NavLink activeClassName="atguigu" className="list-group-item" {...this.props} />```
+                * ![被指定标签体内容的key为children](images/%E4%BB%96%E4%BB%AC%E7%BB%99%E6%8C%87%E5%AE%9A%E4%BA%86%E6%A0%87%E7%AD%BE%E4%BD%93%E5%86%85%E5%AE%B9%E7%9A%84key%E7%9A%84%E5%90%8D%E4%B8%BAchildren.PNG)
+                * ![在...this.props中已经传递了包括to、title在内的许多标签属性，当然也包括children，所以标签自闭和，传递标签属性就可以了](images/%E4%B8%8D%E7%94%A8%E9%9D%9E%E5%BE%97%E7%89%B9%E6%84%8F%E5%86%99%E6%A0%87%E7%AD%BE%E4%BD%93%E5%86%85%E5%AE%B9%EF%BC%8C%E5%8F%AF%E4%BB%A5%E9%80%9A%E8%BF%87%E6%A0%87%E7%AD%BE%E5%B1%9E%E6%80%A7%E4%BC%A0%E9%80%92.PNG)
 
 
 
@@ -902,3 +907,4 @@
 * 路由组件与一般组件的区别：
     * 1. 一般组件是需要我自己手动写在render方法中进行渲染的；路由组件是靠路径的变化，进行路由匹配，决定渲染哪一个组件后，展示在页面上的。但这不是根本区别
     * 2. 一般组件通过props传递数据，组件标签里传递了什么就输出、展示什么；路由组件会受到路由器传递的三个最重要的三个props信息，分别是history、location、match
+
