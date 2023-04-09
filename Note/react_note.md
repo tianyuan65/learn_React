@@ -839,6 +839,10 @@
                         path: "/about"
                         url: "/about"
                       ```
+        * 5.4.2 介绍NavLink标签
+            * 想要点击导航链接后，导航链接高亮，表示被选择，需要在Link标签的className中追加active类名，表示点击哪一个导航就发亮。想要这样的效果还需要创建一个样式文件，并引入，比较麻烦。此时把两个Link标签替换为NavLink标签，NavLink标签的设计理念碰巧就是给正在被点击的那一个链接追加active样式类名，且可以在NavLink标签里多追加一个属性名为activeClassName的属性。在public/index.html文件中添加一个样式名为atguigu的样式，但是之前引入的bootstrap.css的权重比较重，给atguigu的样式添加```!important```，来提高atguigu样式的权重。给两个NavLink标签添加```activeClassName="atguigu"```属性和样式，表示点击哪一个链接就给它追加一个样式名为atguigu的样式。打包后，到页面控制台在元素查看时，点击哪一个链接，```activeClassName="atguigu"```就会被追加到那一个NavLink标签中
+            * ![点击哪一个导航链接，atguigu样式就在哪儿](images/%E7%82%B9%E5%93%AA%E4%B8%AAatguigu%E7%9A%84%E6%A0%B7%E5%BC%8F%E5%B0%B1%E5%9C%A8%E5%93%AA%E9%87%8C.PNG)
+
 
 
 ###  总结

@@ -52,3 +52,33 @@
 * 3. 展示区写Route标签进行路径的匹配
     * <Route path='/xxxx' component={Demo}>
 * 4. <App>的最外侧包裹一个<BrowserRouter>或<HashRouter>
+
+## 四、 路由组件与一般组件
+* 1. 写法不同：
+    * 一般组件：<Demo/>
+    * 理由组件：<Route path="/demo" component={Demo}/>
+* 2. 存放位置不同：
+    * 一般组件：components
+    * 路由组件：pages
+* 3. 接收到的props不同：
+    * 一般组件：写组件标签时传递了什么，就能展示、输出什么
+        * ```<Header a={1}/>```
+        * ![一般组件Header中写了什么，就在控制台输出什么](images/props%E4%BC%A0%E9%80%92%E4%BB%80%E4%B9%88%E5%B0%B1%E8%BE%93%E5%87%BA%E4%BB%80%E4%B9%88.PNG)
+    * 路由组件：接收到三个固定的属性，history、location、match
+        * 可以看到history中有一个location对象，与location属性里的内容一样，所以删了哈。location属性中的key是随机生成的，每次都不一样，所以删了。下面只保留了写代码时常用的几个，留下来的是必须懂的干货，详细去控制台可以看到
+        * ```
+            history: 
+                go: ƒ go(n)
+                goBack: ƒ goBack()
+                goForward: ƒ goForward()
+                push: ƒ push(path, state)
+                replace: ƒ replace(path, state)
+            location: 
+                pathname: "/about"
+                search: ""
+                state: undefined
+            match: 
+                params: {}
+                path: "/about"
+                url: "/about"
+          ```
