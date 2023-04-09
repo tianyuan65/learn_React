@@ -17,12 +17,12 @@ export default class Search extends Component {
           response=>{
             // 请求成功后通知List更新状态
             // this.props.updateAppState({isLoading:false,users:response.data.items})
-            PubSub.publish({isFirst:false,users:response.data.items})
+            PubSub.publish({isLoading:false,users:response.data.items})
           },
           error=>{
             // 请求后通知失败List更新状态
             // this.props.updateAppState({isLoading:false,err:error})
-            PubSub.publish({isFirst:false,err:error.message})
+            PubSub.publish({isLoading:false,err:error.message})
           }
       ) */
     
@@ -44,11 +44,11 @@ export default class Search extends Component {
       try {
         const response=await fetch(`/api1/search/users2?q=${keyWord}`)
         const data=await response.json()
-        PubSub.publish({isFirst:false,users:data.items})
-        console.log(data);
+        PubSub.publish('atguigu',{isLoading:false,users:data.items})
+        console.log(data);  //{items: Array(9)}
       } catch (error) {
         console.log('请求出错',error);
-        PubSub.publish({isFirst:false,err:error.message})
+        PubSub.publish({isLoading:false,err:error.message})
       }
       
     }

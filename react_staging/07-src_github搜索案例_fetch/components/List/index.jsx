@@ -19,7 +19,7 @@ export default class List extends Component {
 
   componentDidMount(){
     this.token=PubSub.subscribe('atguigu',(_,stateObj)=>{
-      this.setState('List组件收到数据了',stateObj);
+      this.setState(stateObj);
     })
   }
 
