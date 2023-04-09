@@ -744,6 +744,102 @@
             * 3. PubSub.publish('delete',data) //发布消息
             * 简单总结就是，有A、B两个组件，A组件想要收到B组件发布的消息，就是B给A提供东西，**A就需要在自己的组件内部订阅消息**，商量好消息的名字叫什么。在B组件当中通过某种方法**发布消息**，发布消息的同时，**把要传递的数据一起携带过去**。因为在A组件中订阅了消息，B组件中的数据就会传递到A组件中
     * 4.5 fetch
+        * 4.5.1 文档：
+            * 1. https://github.github.io/fetch/
+            * 2. https://segmentfault.com/a/1190000003810652
+        * 4.5.2 特点：
+            * 1. fetch是原生函数，不再使用XMLHttpRequest(xhr)对象来提交ajax请求
+            * 2. 老版本的浏览器可能不支持(对，说的就是ie，都2023年了ie都死绝了)
+        * 4.5.3 相关API
+            * 1. GET请求
+                * ```
+                    try {
+                        const response=await fetch(`/api1/search/users2?q=${keyWord}`)
+                        const data=await response.json()
+                        PubSub.publish({isFirst:false,users:data.items})
+                        console.log(data);
+                    } catch (error) {
+                        console.log('请求出错',error);
+                        PubSub.publish({isFirst:false,err:error.message})
+                    }
+                  ```
+            * 2. POST请求
+
+* **第五章 React路由**
+    * 5.1 相关理解
+        * 5.1.1 SPA的理解
+            * 1. 单页Web应用(single page web application,SPA)
+            * 2. 整个应用只有**一个完整的页面**
+            * 3. 点击页面中的链接**不会刷新**页面，只会做页面的**局部更新**
+            * 4. 数据都需要通过ajax请求获取，并在前端异步展现
+        * 5.1.2 路由的理解
+            * 1. 什么是路由？
+                * 1. 一个路由就是一个映射关系(key:value)：你给我key，我根据拿到的key，决定响应哪一个value
+                * 2. key为路径(path)，value可能是function或component
+            * 2. 路由分类：
+                * 1. 后端路由：
+                    * 理解：value是function，用来处理客户端提交的请求
+                    * 注册路由：router.get(path,function(req,res){})
+                    * 工作过程：当node接收到一个请求时，根据请求路径找到匹配的路由，调用路由中的函数来处理请求，返回响应数据。
+                * 2. 前端路由：(无刷新跳转) 详细例子见C:\Users\田园\Desktop\尚硅谷React全家桶教程（天禹老师主讲）\react全家桶资料\06_其他\前端路由的基石_history.html
+                    * 浏览器端路由，value是component，用于展示页面内容
+                    * 注册路由：<Route path="/test" component={Test}>
+                    * 工作过程：当请求的path变为/test时，当前路由组件就会变为Test组件
+        * 5.1.3 react-router-dom 的理解
+            * 1. react的一个插件库
+            * 2. 专门用来实现一个SPA应用
+            * 3. 基于react的项目基本都会用到此库
+    * 5.2 react-router-dom相关API
+        * 5.2.1 内置组件
+            * 1. <BrowserRouter>
+            * 2. <HashRouter>
+            * 3. <Route>
+            * 4. <Redirect>
+            * 5. <Link>
+            * 6. <NavLink>
+            * 7. <Switch>
+        * 5.2.2 其他
+            * 1. history对象
+            * 2. match对象
+            * 3. withRouter函数
+    * 5.3 基本路由使用
+        * 1. 明确好界面中的导航区、展示区
+        * 2. 导航区的a标签改为Link标签
+            * ```<Link to="/xxxxx">Demo</Link>```
+        * 3. 展示区写Route标签进行路径的匹配，看路径path是什么，就展示哪一个组件component的组件内容
+            * ```<Route path='/xxxx' component={Demo}>```
+        * 4. <App>的最外侧包裹一个<BrowserRouter>或<HashRouter>，用于管理整个应用里的路由
+    * 5.4 路由组件与一般组件
+        * 5.4.1 区别
+            * 1. 写法不同：
+                * 一般组件：<Demo/>
+                * 理由组件：<Route path="/demo" component={Demo}/>
+            * 2. 存放位置不同：
+                * 一般组件：components
+                * 路由组件：pages
+            * 3. 接收到的props不同：
+                * 一般组件：写组件标签时传递了什么，就能展示、输出什么
+                    * ```<Header a={1}/>```
+                    * ![一般组件Header中写了什么，就在控制台输出什么](images/props%E4%BC%A0%E9%80%92%E4%BB%80%E4%B9%88%E5%B0%B1%E8%BE%93%E5%87%BA%E4%BB%80%E4%B9%88.PNG)
+                * 2. 路由组件：接收到三个固定的属性，history、location、match
+                    * 可以看到history中有一个location对象，与location属性里的内容一样，所以删了哈。location属性中的key是随机生成的，每次都不一样，所以删了。下面只保留了写代码时常用的几个，留下来的是必须懂的干货，详细去控制台可以看到
+                    * ```
+                      history: 
+                        go: ƒ go(n)
+                        goBack: ƒ goBack()
+                        goForward: ƒ goForward()
+                        push: ƒ push(path, state)
+                        replace: ƒ replace(path, state)
+                      location: 
+                        pathname: "/about"
+                        search: ""
+                        state: undefined
+                      match: 
+                        params: {}
+                        path: "/about"
+                        url: "/about"
+                      ```
+
 
 ###  总结
 * speak中的this是谁，得看是怎么调用的
@@ -792,3 +888,13 @@
         const {a:{b:data}}=obj2
         console.log(data)  //1
       ```
+* 在前端，jQuery和axios都是对xhr进行封装的，不直接用xhr是因为不好用，因为xhr的API设计的不咋地，且它无法解决回调地狱的问题
+* SPA应用确实是单页面，但是页面虽然是单个的，组件是多个的，在单个的页面上根据点击的展示标题，在指定部分中显示不同标题对应的组件
+* 前端路由部分，path怎么就会变成"/test"？因为我点了导航组件中的特殊的链接，就会引起路径的变化，跳转到我点击的组件，展示组件的内容
+* 前端路由得靠BOM身上的history对象，就像你想要一个人（BOM）老老实实的听你的话，那就牢牢地保存好他的丑照（history）
+* history对象有两种创建方式，History.createBrowserHistory()和History.createHashHistory()。browser是直接使用H5推出的history身上的API，但有的浏览器不支持(单名批评ie，但是没关系，它已经死了)；hash值，也就是使用锚点，兼容性极佳
+* 路由就是路由器后面的插口，多个路由需要路由器来管理
+* 点击导航区里不同的导航选项(也叫路由链接)。如果我点击了导航区里的某个导航选项，展示区就会展示对应的内容。**其原理就是点击导航区里的导航选项，引起历史记录里路径的变化，这个变化被前端路由器所检测到，进行匹配组件，从而展示对应组件的内容**，点击链接引起url路径的变化
+* 路由组件与一般组件的区别：
+    * 1. 一般组件是需要我自己手动写在render方法中进行渲染的；路由组件是靠路径的变化，进行路由匹配，决定渲染哪一个组件后，展示在页面上的。但这不是根本区别
+    * 2. 一般组件通过props传递数据，组件标签里传递了什么就输出、展示什么；路由组件会受到路由器传递的三个最重要的三个props信息，分别是history、location、match
