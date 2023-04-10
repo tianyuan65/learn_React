@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
-import {BrowserRouter,Route,Switch} from 'react-router-dom'
+import {BrowserRouter,Route} from 'react-router-dom'
 import Home from './pages/Home'  //Home是路由组件
 import About from './pages/About'  //About是路由组件
 import Header from './components/Header'  //Header是一般组件
 import MyNavLink from './components/MyNavLink'
-import Test from './pages/Test'
 
 export default class App extends Component {
   render() {
@@ -33,12 +32,8 @@ export default class App extends Component {
             <div className="panel">
               <div className="panel-body">
                 {/* 注册路由，靠路由进行匹配，匹配成功才展示对应的组件内容 */}
-                <Switch>
-                  <Route path="/about" component={About}/>
-                  <Route path="/home" component={Test}/>
-                  <Route path="/home" component={Home}/>
-                </Switch>
-               
+                <Route path="/about" component={About}/>
+                <Route path="/home" component={Home}/>
               </div>
             </div>
           </div>
