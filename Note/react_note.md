@@ -822,7 +822,7 @@
                     * ```<Header a={1}/>```
                     * ![一般组件Header中写了什么，就在控制台输出什么](images/props%E4%BC%A0%E9%80%92%E4%BB%80%E4%B9%88%E5%B0%B1%E8%BE%93%E5%87%BA%E4%BB%80%E4%B9%88.PNG)
                 * 2. 路由组件：接收到三个固定的属性，history、location、match
-                    * 可以看到history中有一个location对象，与location属性里的内容一样，所以删了哈。location属性中的key是随机生成的，每次都不一样，所以删了。下面只保留了写代码时常用的几个，留下来的是必须懂的干货，详细去控制台可以看到
+                    * 可以看到history中有一个location对象，与location属性里的内容一样，所以删了。location属性中的key是随机生成的，每次都不一样，所以删了。下面只保留了写代码时常用的几个，留下来的是必须懂的干货，详细去控制台可以看到
                     * ```
                       history: 
                         go: ƒ go(n)
@@ -847,6 +847,16 @@
                 * 定义一个组件MyNavLink，引入到App中，写入名为MyNavLink的标签，并在标签中添加必要的属性，例如```to="/about"```。回到MyNavLink组建中，想要实现和前面一样的展示效果，需要对NavLink二度封装，引入'react-route-dom'中NavLink必要的、重复的属性```activeClassName="atguigu" className="list-group-item"```。至于其他想要追加的属性，标签内的标签属性可以通过props来传递其数据或状态，但标签体没有特意说过，其实标签体内容也是一种特殊的标签属性。在控制台查看时，可以看到两个标签里所有的属性输出了，其中标签体内容的key的名字我没有指定，他们给指定了就叫children。且在MyNavLink/index.jsx中写标签体内容时不一定要这么写，```<NavLink activeClassName="atguigu" className="list-group-item" {...this.props}>{this.props.children}</NavLink>```。可以把标签体内容配在children这个标签属性中也是可以的,```<NavLink activeClassName="atguigu" className="list-group-item" {...this.props} />```
                 * ![被指定标签体内容的key为children](images/%E4%BB%96%E4%BB%AC%E7%BB%99%E6%8C%87%E5%AE%9A%E4%BA%86%E6%A0%87%E7%AD%BE%E4%BD%93%E5%86%85%E5%AE%B9%E7%9A%84key%E7%9A%84%E5%90%8D%E4%B8%BAchildren.PNG)
                 * ![在...this.props中已经传递了包括to、title在内的许多标签属性，当然也包括children，所以标签自闭和，传递标签属性就可以了](images/%E4%B8%8D%E7%94%A8%E9%9D%9E%E5%BE%97%E7%89%B9%E6%84%8F%E5%86%99%E6%A0%87%E7%AD%BE%E4%BD%93%E5%86%85%E5%AE%B9%EF%BC%8C%E5%8F%AF%E4%BB%A5%E9%80%9A%E8%BF%87%E6%A0%87%E7%AD%BE%E5%B1%9E%E6%80%A7%E4%BC%A0%E9%80%92.PNG)
+            * Switch的使用
+                * 当一个路径下对应两个或以上数量的组件，点击导航链接时，其组建内容会都展示在展示区。因为只想展示与路由相匹配的组件，不想要展示与路径不匹配的组件，所以匹配到与组件相对应的路径后就不继续匹配了。此时需要先引入Switch标签，并把所有注册的路由使用Switch标签包起来，如果不适用Switch包括路由，匹配相对应的组建后，会继续向下匹配，这是我不需要的，但使用Switch包裹后，匹配上了路径，就不会继续向下匹配了。虽然**不会在同一个路径上对应两个或多个组件**，但还是需要注意，哪个组件对应的路径先被匹配，就展示该组件的内容，如下代码，就会展示Test组件的内容，当然Home组件写在上面，那就展示Home组件的内容。当写入了多个路由就用Switch标签包裹起来即可，写了一个路由就别包了。
+                    * ```
+                        <Switch>
+                            <Route path="/about" component={About}/>
+                            <Route path="/home" component={Test}/>
+                            <Route path="/home" component={Home}/>
+                        </Switch>
+                      ```
+                    * ![此时展示Test组件的内容，因为对应的/home路径写在上面匹配了Test组件，且Switch包了之后不往下继续匹配了](images/%E5%85%88%E5%8C%B9%E9%85%8D%E5%93%AA%E4%B8%AA%E7%BB%84%E4%BB%B6%E5%AF%B9%E5%BA%94%E7%9A%84%E8%B7%AF%E5%BE%84%E5%B0%B1%E5%B1%95%E7%A4%BA%E5%93%AA%E4%B8%AA%E7%BB%84%E4%BB%B6.PNG)
 
 
 
@@ -907,4 +917,4 @@
 * 路由组件与一般组件的区别：
     * 1. 一般组件是需要我自己手动写在render方法中进行渲染的；路由组件是靠路径的变化，进行路由匹配，决定渲染哪一个组件后，展示在页面上的。但这不是根本区别
     * 2. 一般组件通过props传递数据，组件标签里传递了什么就输出、展示什么；路由组件会受到路由器传递的三个最重要的三个props信息，分别是history、location、match
-
+* 一般不要让一个路径对应两个组件
