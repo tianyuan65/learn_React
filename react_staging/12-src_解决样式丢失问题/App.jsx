@@ -24,7 +24,7 @@ export default class App extends Component {
 
               {/* 在React中靠路由链接实现切换组件(注意跳转地址写法：小写带杠，不加点)--编写路由链接 */}
               {/* 把标签名(about/home)作为标签体内容(About/Home)写在标签(<MyNavLink></MyNavLink>)里 */}
-              <MyNavLink to="/atguigu/about">About</MyNavLink>
+              <MyNavLink to="/about">About</MyNavLink>
               <MyNavLink to="/atguigu/home">Home</MyNavLink>
               
               
@@ -35,7 +35,7 @@ export default class App extends Component {
               <div className="panel-body">
                 {/* 注册路由，靠路由进行匹配，匹配成功才展示对应的组件内容 */}
                 <Switch>
-                  <Route path="/atguigu/about" component={About}/>
+                  <Route path="/about" component={About}/>
                   <Route path="/atguigu/home" component={Home}/>
                 </Switch>
                

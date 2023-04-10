@@ -857,6 +857,14 @@
                         </Switch>
                       ```
                     * ![此时展示Test组件的内容，因为对应的/home路径写在上面匹配了Test组件，且Switch包了之后不往下继续匹配了](images/%E5%85%88%E5%8C%B9%E9%85%8D%E5%93%AA%E4%B8%AA%E7%BB%84%E4%BB%B6%E5%AF%B9%E5%BA%94%E7%9A%84%E8%B7%AF%E5%BE%84%E5%B0%B1%E5%B1%95%E7%A4%BA%E5%93%AA%E4%B8%AA%E7%BB%84%E4%BB%B6.PNG)
+            * 解决样式丢失问题
+                * 问题说明：路由路径是多级的结构，在我刷新的时候样式就会丢失。以```http://localhost:3000/atguigu/css/bootstrap.css```这个请求样式为例，丢失的原因是在多级结构中的atguigu也是localhost:3000，也就是脚手架下的路径，但是实际脚手架下没有名为atguigu的文件夹(因为atguigu是我自己加的)。第一次运行脚手架，打开浏览器时是不会出现样式丢失的情况的，甚至在Network查看时，样式文件成功发送了请求，还得到了成功的响应。点击导航链接后，刷新页面就会出现页面丢失的情况。因为无法在脚手架的根路径下找到发送请求的样式文件，所以最终展示在页面上的是public根路径下的index.html文件，且在Response部分查看，响应回来的文件的话也会发现是index.html文件。
+                * 解决办法：
+                    * 1. 去掉index.html文件里引入的样式文件最前面的点(常用)
+                    * 2. 把index.js文件和App组件中所有的BrowserRouter换成HashRouter。打包后打开浏览器会发现```http://localhost:3000`/#/```后面会带井号，**井号后面内容被认为是前端的资源，不会带给脚手架服务器**，所以```atguigu/about```是出现在井号后面的。所以当刷新页面，给脚手架服务器发送请求时，是自动忽略井号后面的内容的。挡在Network查看bootstrap样式文件时，请求路径是```http://localhost:3000/css/bootstrap.css```，没有atguigu，因为井号后面的前端资源被脚手架服务器自动忽略了，那就以原来在index.html中引入的有点的bootstrap样式文件为主，且得到的成功响应文件也是样式文件。
+                        * ![1.去index.html里bootstrap最前面的点；2.把BrowserRouter换成HashRouter](images/%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%B3%95%E7%BB%9F%E4%B8%80%E7%9A%84%E6%95%88%E6%9E%9C%E5%9B%BE.PNG)
+                    * **"/css/bootstrap.css"和"./css/bootstrap.css"的区别**
+                        * 有点表示以当前文件出发，在当前文件夹下出发去找样式文件；没点，直接"/css"就表示直接去localhost:3000下找css文件夹下的bootstrap.css文件
 
 
 
@@ -917,4 +925,6 @@
 * 路由组件与一般组件的区别：
     * 1. 一般组件是需要我自己手动写在render方法中进行渲染的；路由组件是靠路径的变化，进行路由匹配，决定渲染哪一个组件后，展示在页面上的。但这不是根本区别
     * 2. 一般组件通过props传递数据，组件标签里传递了什么就输出、展示什么；路由组件会受到路由器传递的三个最重要的三个props信息，分别是history、location、match
-* 一般不要让一个路径对应两个组件
+* 路由路径是多级的结构，在我刷新的时候样式就会丢失。以```http://localhost:3000/atguigu/css/bootstrap.css```这个请求样式为例，丢失的原因是在多级结构中的atguigu也是localhost:3000，也就是脚手架下的路径，但是实际脚手架下没有名为atguigu的文件夹(因为atguigu是我自己加的)。第一次运行脚手架，打开浏览器时是不会出现样式丢失的情况的，甚至在Network查看时，样式文件成功发送了请求，还得到了成功的响应。点击导航链接后，刷新页面就会出现页面丢失的情况。因为无法在脚手架的根路径下找到发送请求的样式文件，所以最终展示在页面上的是public根路径下的index.html文件，且在Response部分查看，响应回来的文件的话也会发现是index.html文件。
+
+

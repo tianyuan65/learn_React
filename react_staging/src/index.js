@@ -2,7 +2,7 @@
 import React from 'react'
 // 引入react-dom
 import ReactDOM from 'react-dom'
-// 引入react-router-dom中的BrowserRouter
+// 引入react-router-dom中的HashRouter
 import {BrowserRouter} from 'react-router-dom'
 // 引入App
 import App from './App'
