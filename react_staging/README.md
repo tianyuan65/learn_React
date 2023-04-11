@@ -101,4 +101,16 @@
 * 1. 默认使用的是模糊匹配(煎蛋机：【输入的路径】必须包含要【匹配的内容】，且顺序要一致)
 * 2. 开启严格匹配：<Route exact={true} path="/home" component={Home}/>
 * 3. 严格匹配不要随便开启，需要时再开，有些时候开启会导致无法继续匹配二级路由
-          
+
+## 九、Redirect的使用
+* 1. 一般写在所有路由注册的最下方，当所有的路由都无法匹配时，跳转到Redirect指定的路由
+* 2. 具体编码：
+    * ```
+        <Switch>
+            {/* 注册路由，靠路由进行匹配，匹配成功才展示对应的组件内容 */}
+            <Route path="/about" component={About}/>
+            <Route path="/home" component={Home}/>
+            {/* 重定向，和谁都匹配不上的时候，听从重定向的发落，用于兜底 */}
+            <Redirect to="/about" />
+        </Switch>
+      ```
