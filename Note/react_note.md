@@ -865,6 +865,14 @@
                         * ![1.去index.html里bootstrap最前面的点；2.把BrowserRouter换成HashRouter](images/%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%B3%95%E7%BB%9F%E4%B8%80%E7%9A%84%E6%95%88%E6%9E%9C%E5%9B%BE.PNG)
                     * **"/css/bootstrap.css"和"./css/bootstrap.css"的区别**
                         * 有点表示以当前文件出发，在当前文件夹下出发去找样式文件；没点，直接"/css"就表示直接去localhost:3000下找css文件夹下的bootstrap.css文件
+            * 路由的模糊匹配和严格匹配
+                * 模糊匹配：
+                    * 1. 在MyNavLink给多了，但是Route没要那么多，可以像以前那样在展示区看到组件内容，但是MyNavLink还是```to="home"```，Route却要求```to="home/a/b"```，就无法展示。
+                    * 2. MyNavLink给多了，还给了奇怪的东西，``` <MyNavLink to="/a/home/b">Home</MyNavLink>```，与Route要求的不匹配，路径的顺序不一致，```<Route path="/home" component={Home}/>```，也无法展示组件内容。
+                    * 关于模糊匹配的小总结：这就像彩礼，我只要求正常、必要的，但是你别上奇怪的地方找来奇怪的或者不给。
+                * 严格/精准匹配
+                    * 如上方两种无论哪种情况，以第一个情况举例，MyNavLink给多了，但Route只要home路径，虽然可以匹配上并在点击后展示组件内容，但毕竟不规范。此时在Route标签中添加exact属性，且属性值为true，```<Route exact={true} path="/home" component={Home}/>```。重新打包、刷新页面后，可以看到点击Home选项，无法展示Home组件的内容，因为添加了严格匹配的属性后，要求的和收到的必须一样，差一个符号都不行。
+                * 严格匹配虽然目前看来是规范代码书写方法的，要求不能写多或写少，但到正式工作中，不能随便开严格匹配，如果不开启严格匹配，不影响页面的呈现，那就不开，但若影响了(若跳到了奇怪的地方；若点啥都跳到了一个地方)就开启严格匹配来规范。
 
 
 
