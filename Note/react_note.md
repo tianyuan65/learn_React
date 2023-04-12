@@ -895,9 +895,9 @@
     * 5.7 push和replace
         * 以上面的情况为例，一般点击到三级路由，也就是message1/2/3后，点击后退时，会后退到上一个页面中。这是因为Link路由默认是使用push属性的，也就是压栈，可以在历史记录中查看到都访问过哪些网页，点击了哪些链接，可以按照顺序一步一步回退到想要访问的网页中。但若不想留有记录，就可以给Link路由添加replace属性，这个属性可以将最上面的记录删掉，自己会成为最新的，且因为替换掉了上一个记录，点击回退时，会退到它的上上一个页面中。就是在历史记录中查看的时候无法找到，最近的上一个网址/网页的访问记录。```<Link replace to={{pathname:'home/message/details',state:{id:msgObj.id,title:msgObj.title}}}>{msgObj.title}</Link>```，如果给所有的请求路由添加replace属性，那回退的时候会直接退到刚打开浏览器的那个页面，不管咋说，挺炸裂的。
     * 5.8 多种路由跳转方式
-        * 编程式路由导航，若想要点击的不只是链接，而是按钮或是一个图片的时候，不需要使用Link或NavLink标签包裹起来。以
-            * 
-
+        * **编程式路由导航**，若想要点击的不只是链接，而是按钮或是一个图片的时候，不需要使用Link或NavLink标签包裹起来。以上面情况为例，想要在每个message选项后面追加两个按钮，名为push查看和replace查看。显而易见，是点击push按钮后，可以回退到上一个路径，点击replace会回退到上上一个路径。
+            * 以传递state参数的方法为例，定义两个函数pushShow和replaceShow，并把这两个函数分别绑定在onClick事件上，在render方法前执行这两个函数，各自的函数内分别调用push和replace方法，方法不但可以传递跳转的方式，还可以携带三种不同的参数。打开浏览器，点击按钮后会在控制台输出this.props的属性，其中history属性有三个api，goBack、goForward和go，显而易见，和push或replace一样，定义三个函数，绑定在onClick事件上，goBack是回退，goForward是前进，go可以传递数值参数，正数为前进，负数为回退。
+        * 
 
 ###  总结
 * speak中的this是谁，得看是怎么调用的
