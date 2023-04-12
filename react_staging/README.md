@@ -124,4 +124,9 @@
     * 路由链接(携带参数)：<Link to={'/home/message/details/${msgObj.id}/${msgObj.title}'}>{msgObj.title}</Link>
     * 注册路由(声明接收)：<Route path="/home/message/details/:id/:title" component={Details}/>
     * 接收参数：const {id,title}=this.props.match.params
-* 2. 
+* 2. search参数
+     * 路由链接(携带参数)：<Link to={`/home/message/details/?id=${msgObj.id}&title=${msgObj.title}`}>{msgObj.title}</Link>
+    * 注册路由(声明接收)：<Route path="/home/message/details" component={Details}/>
+    * 接收参数：const {search}=this.props.location
+    * 备注：获取到的search是urlencoded编码字符串，需要借助querystring解析
+* 3. state参数
