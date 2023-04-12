@@ -34,7 +34,7 @@ export default class App extends Component {
                 <Switch>
                   {/* 注册路由，靠路由进行匹配，匹配成功才展示对应的组件内容 */}
                   <Route path="/about" component={About}/>
-                  <Route exact path="/home" component={Home}/>
+                  <Route path="/home" component={Home}/>
                   {/* 重定向，和谁都匹配不上的时候，听从重定向的发落，用于兜底 */}
                   <Redirect to="/about" />
                 </Switch>
