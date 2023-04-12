@@ -892,6 +892,9 @@
                             return detailObj.id===id
                         }) || {}
                       ```
+    * 5.7 push和replace
+        * 以上情况为例，一般点击到三级路由，也就是message1/2/3后，点击后退时，会后退到上一个页面中。这是因为Link路由默认是使用push属性的，也就是压栈，可以在历史记录中查看到都访问过哪些网页，点击了哪些链接，可以按照顺序一步一步回退到想要访问的网页中。但若不想留有记录，就可以给Link路由添加replace属性，这个属性可以将最上面的记录删掉，自己会成为最新的，且因为替换掉了上一个记录，点击回退时，会退到它的上上一个页面中。就是在历史记录中查看的时候无法找到，最近的上一个网址/网页的访问记录。```<Link replace to={{pathname:'home/message/details',state:{id:msgObj.id,title:msgObj.title}}}>{msgObj.title}</Link>```
+
 
 ###  总结
 * speak中的this是谁，得看是怎么调用的
