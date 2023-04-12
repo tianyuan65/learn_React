@@ -134,3 +134,5 @@
     * 注册路由(声明接收)：<Route path="/home/message/details" component={Details}/>
     * 接收参数：const {search}=this.props.location.state
     * 备注：刷新也可以保留参数
+
+## 十二、
