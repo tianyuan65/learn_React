@@ -878,8 +878,8 @@
             * React中路由的注册是有顺序的，App中的About和Home这两个路由是先注册的，每当我点击一个路由链接，要改地址的时候，会从最开始注册的路由开始进行逐层匹配。所以当我点击了News链接，路径确实会改成news，但是紧随其后会触发路由的匹配，路由从按照当时注册的顺序进行匹配，就会来到App，一个一个对比，我要的是去/news，对比后会发现没有与之相匹配的，那就听从重定向，也就是Redirect的发落，按照我写的代码，点击News或者Message，就会去/about。想要解决这种情况，那就去Home中把两个MyNavLink的to属性的值由```"/news或message"```，改为```"/home/news或message"```，并注册路由。
                 * 分析：当点击Home后会展示Home组件里所有的内容，Home里还有两个路由，News和Message，当点击他们两个中的任何一个的时候需要在展示区中展示匹配的路径所对应的组件的内容。以点击News为例，当点击News后，路径变成了/home/news。因路由的匹配都是按照顺序进行的，/home/news到App中，与注册的路由进行逐一匹配，/about不匹配，pass掉，到/home的时候，由于没有添加精准匹配的设置，进行了模糊匹配，Home组件才没有丢失，不像上面说明的那样跳到/about，展示About的内容。成功挂载Home组件后，在Home组件里又注册了路由，继续进行路由的匹配，我输入的/home/news和Route的路径完美匹配，就会在展示了Home组件内容的同时，也展示了News的内容。Message同理，并延伸，写三级路由甚至更多级路由时，需要我规规矩矩的把前几级的路径写好。
     * 5.6 向路由组件传递参数数据
-        * 向路由组件传递params参数
-
+        * 二级路由的基础上，再追加一级路由，点击Message中的任何一个选项(message1/2/3)，都会在其展示区展示与匹配的路由对应的组件的内容。
+            * 方法1：向路由组件传递params参数。使Message中作为展示内容的message1/2/3也称为导航链接，点击任意一个，都展示与之匹配的路由对应的组件内容，在此对应的组件命名为Details。因为Details中展示的内容不只是一行内容那么简单，有id、title和content，所以事先需要在Message中初始化message的状态，state中传入对象messageArr数组，在messageArr中写入路径的变量。在render方法中先解构赋值```const {messageArr}=this.state```，然后对messageArr数组进行遍历，并给li标签传递msgObj的id。在创建好的Details组件中，写入点击选项后要展示的内容列表。由于Details的导航区和展示区都是包含在Message的展示区里的，当点击任何一个message的时候，就会渲染/展示Details组件。导航区是动态遍历生成的，将导航选项的标签改为Link，并拖家带口的、完整的将需要匹配的路径写好，```<Link to={`/home/message/details/${msgObj.id}/${msgObj.title}`}>{msgObj.title}</Link>```，并在下面注册路由，表示在此声明接收params参数，```<Route path="/home/message/details/:id/:title" component={Details}/>```。在Details组件的上方定义message的id和content，整合为数组，名为DetailsData，专门用于存储message的详情，只要从Message中把与路径匹配的信息带到Details中，Details就输出与信息对象(msgObj)对应的content。在Details中输出this.props，在控制台可以查看到路由组件的固定的三个属性，点击任意一个message，其中打开match属性，可以看到params中传递了点击的message的id和title，由此再次使用解构赋值，```const {id,title}=this.props.match.params```，可以展示id和title，```<li>ID/TITLE:{id/title}</li>```。然后可以拿着id到DetailsData中找对应的消息项，随后使用find方法，```const fidnResult=DetailsData.find((detailObj)=>{return detailObj.id===id})```，找到消息详情对象，将这个对象传到CONTENT中，使之得到向路由组件传递的params数据，展示与匹配的路径相对应的组件内容。
 
 ###  总结
 * speak中的this是谁，得看是怎么调用的

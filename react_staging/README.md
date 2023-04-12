@@ -118,3 +118,10 @@
 ## 十、嵌套路由
 * 1. 注册了子路由时要写上父路由的path值
 * 2. 路由的匹配是按照注册路由的顺序进行的
+
+## 十一、向路由组件传递参数
+* 1. params参数
+    * 路由链接(携带参数)：<Link to={'/home/message/details/${msgObj.id}/${msgObj.title}'}>{msgObj.title}</Link>
+    * 注册路由(声明接收)：<Route path="/home/message/details/:id/:title" component={Details}/>
+    * 接收参数：const {id,title}=this.props.match.params
+* 2. 
