@@ -883,6 +883,15 @@
                 * 使Message中作为展示内容的message1/2/3也称为导航链接，点击任意一个，都展示与之匹配的路由对应的组件内容，在此对应的组件命名为Details。因为Details中展示的内容不只是一行内容那么简单，有id、title和content，所以事先需要在Message中初始化message的状态，state中传入对象messageArr数组，在messageArr中写入路径的变量。在render方法中先解构赋值```const {messageArr}=this.state```，然后对messageArr数组进行遍历，并给li标签传递msgObj的id。在创建好的Details组件中，写入点击选项后要展示的内容列表。由于Details的导航区和展示区都是包含在Message的展示区里的，当点击任何一个message的时候，就会渲染/展示Details组件。导航区是动态遍历生成的，将导航选项的标签改为Link，并拖家带口的、完整的将需要匹配的路径写好，```<Link to={`/home/message/details/${msgObj.id}/${msgObj.title}`}>{msgObj.title}</Link>```，并在下面注册路由，表示在此声明接收params参数，```<Route path="/home/message/details/:id/:title" component={Details}/>```。在Details组件的上方定义message的id和content，整合为数组，名为DetailsData，专门用于存储message的详情，只要从Message中把与路径匹配的信息带到Details中，Details就输出与信息对象(msgObj)对应的content。在Details中输出this.props，在控制台可以查看到路由组件的固定的三个属性，点击任意一个message，其中打开match属性，可以看到params中传递了点击的message的id和title，由此再次使用解构赋值，```const {id,title}=this.props.match.params```，可以展示id和title，```<li>ID/TITLE:{id/title}</li>```。然后可以拿着id到DetailsData中找对应的消息项，随后使用find方法，```const fidnResult=DetailsData.find((detailObj)=>{return detailObj.id===id})```，找到消息详情对象，将这个对象传到CONTENT中，使之得到向路由组件传递的params数据，展示与匹配的路径相对应的组件内容。
             * 2. **方法2：传递search参数**
                 * 在方法1的基础上，使用search方法向路由组件传递参数，```<Link to={`/home/message/details/?id=${msgObj.id}&title=${msgObj.title}`}>{msgObj.title}</Link>```，在下面正常注册路由即可，无需声明接收search参数，此时到控制台输出查看this.props，点击任意一个选项的话，会发现在location的search中查看到?id=01&title=message1，这是字符串的形式，我需要对象的形式，并且把这些对象进行整合成数组，方便遍历。此时需要在Details中引入querystring，简称qs，它是可以把字符串和对象进行转换的工具，引入后，接收search参数，```const {search}=this.props.location```，并把从search中提取来的字符串转换为对象，```const {id,title}=qs.parse(search.slice(1))```。在展示列表中传入各自的属性，到浏览器点击任意一个选项均可展示与匹配路径相应的组件内容。
+            * 3. **方法3：传递state参数** 此state和一般组件里的state没有任何关系
+                * state方法与前两个方法不同之处就是，前两个方法会把传递的路径暴露在地址栏上，隐私信息就暴露了，不安全，state方法在地址栏上隐藏的。
+                * 向路由组件传递的参数，要传递的匹配路径一直是字符串形式的写法，但是state方法里要求传递的匹配路径要求是对象，```to={{pathname:'home/message/details',state:{id:msgObj.id,title:msgObj.title}}}```。state和search相同的一点就是无需声明接收参数。在控制台输出this.props，可以发现location的state中查看到对象写法的id和title，所以到Details中提取从state中获取的id和title属性，来接收state参数，最后以便于点击选项时，展示对应的组件内容。此时查看网址的话会发现message后面的内容就被隐藏了，虽然提高了安全性，但是当把这个网址发送给别人或把浏览器的历史记录全部删除的时候，就会发现无法打开网页，甚至给报错。为了这是因为当没有历史记录作为定位的时候，this.props.location.state是undefined，在undefined的state中国查找的id和title必定也是undefined。所以需要在接收state参数和寻找detailObj对象方法的的最后加上当没有这个网址的访问记录时的情况。
+                    * ```
+                        const {id,title}=this.props.location.state || {}
+                        const fidnResult=DetailsData.find((detailObj)=>{
+                            return detailObj.id===id
+                        }) || {}
+                      ```
 
 ###  总结
 * speak中的this是谁，得看是怎么调用的
