@@ -135,4 +135,12 @@
     * 接收参数：const {search}=this.props.location.state
     * 备注：刷新也可以保留参数
 
-## 十二、
+## 十二、编程式路由导航
+* 借用this.props.history对象上的API对操作路由跳转、前进、后退
+    * this.props.history.push()
+    * this.props.history.replace()
+    * this.props.history.goBack()
+    * this.props.history.goForward()
+    * this.props.history.go(n)
+
+## 十三、
