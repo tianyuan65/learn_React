@@ -919,6 +919,9 @@
         * 6.1.2 ant-design(国内蚂蚁金服)
             * 1. 官网：https://ant.design/index-cn
             * 2. GitHub：https://github.com/ant-design/ant-design/
+        * eject暴露脚手架所有配置内容
+
+* **第七章 redux**
 
 
 

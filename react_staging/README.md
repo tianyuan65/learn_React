@@ -155,4 +155,21 @@
     * HashRouter刷新后会导致路由state参数的丢失
 * 4. 备注：HashRouter可以用于解决一些路径错误相关的问题
 
-## 十四、
+## 十四、antd的按需引入+自定义主题
+* 1. 安装依赖  npm i react-app-rewired customize-cra @craco/craco
+* 2. 修改package.json，并在其dependencies中添加```"@craco/craco": "^7.1.0",```和```"react-scripts": "5.0.1",```
+    * ```
+        "scripts": {
+            "start": "craco start",
+            "build": "craco build",
+            "test": "craco test",
+            "eject": "craco eject"
+        },
+      ```
+* 3. 根目录下创建craco.config.js
+    * ```
+      module.exports = {
+        // ...
+      };
+      ```
+* 4. 备注：不用在组件里亲自引入样式了，即 import 'antd/dist/reset.css'就可以删掉了，目前antd最新版本为5.4.2，默认就是按需引入了样式文件，不用像老师讲得那样，具体的去官网看即可
