@@ -897,7 +897,8 @@
     * 5.8 多种路由跳转方式
         * **编程式路由导航**，若想要点击的不只是链接，而是按钮或是一个图片的时候，不需要使用Link或NavLink标签包裹起来。以上面情况为例，想要在每个message选项后面追加两个按钮，名为push查看和replace查看。显而易见，是点击push按钮后，可以回退到上一个路径，点击replace会回退到上上一个路径。
             * 以传递state参数的方法为例，定义两个函数pushShow和replaceShow，并把这两个函数分别绑定在onClick事件上，在render方法前执行这两个函数，各自的函数内分别调用push和replace方法，方法不但可以传递跳转的方式，还可以携带三种不同的参数。打开浏览器，点击按钮后会在控制台输出this.props的属性，其中history属性有三个api，goBack、goForward和go，显而易见，和push或replace一样，定义三个函数，绑定在onClick事件上，goBack是回退，goForward是前进，go可以传递数值参数，正数为前进，负数为回退。
-        * 
+        * withRouter的使用
+            * withRouter是react-router-dom的一个函数，而不是组件。它的作用的接收一般组件，使其拥有路由组件特有的三个属性。以现在的代码为例，Header组件是一个一般组件，想要给一般组件添加路由组件特有的属性的API的话，会发现报错，所以此时需要调用withRouter函数，并向函数内传递一般组件作为参数后，向外暴露被withRouter函数加工之后的返回值，其返回值就是一个新组件。
 
 ###  总结
 * speak中的this是谁，得看是怎么调用的
