@@ -922,7 +922,47 @@
         * eject暴露脚手架所有配置内容
 
 * **第七章 redux**
-
+    * 7.1 redux理解
+        * 7.1.1 学习文档
+            * 1. 英文文档：https://redux.js.org/
+            * 2. 中文文档：http://www.redux.org.cn/
+            * 3. GitHub：https://github.com/reactjs/redux
+        * 7.1.2 redux是什么？
+            * 1. redux是一个专门用于做**状态管理**的JS库(不是react插件库)
+            * 2. 它可以用在react、angular、vue等项目中，但基本与react配合使用
+            * 3. 作用：集中式管理react应用中多个组件**共享**的状态
+        * 7.1.3 什么情况下需要使用redux
+            * 1. 某个组件的状态，需要让其他组件可以随时拿到(共享)
+            * 2. 一个组件需要改变另一个组件的状态(通信)
+            * 3. 总体原则：能不用就不用，如果不用比较吃力才考虑使用；redux是独立于所有的组件存在的，需要共享的组件中的状态，就交给redux。
+        * 7.1.4 redux工作流程/工作原理
+            * ![redux原理图](images/redux%E5%8E%9F%E7%90%86%E5%9B%BE.png)
+    * 7.2 redux的三个核心概念
+        * 7.2.1 action(相当于产品经理)
+            * 1. 动作的对象，它只是个JavaScript里普普通通的一个Object类型的一半对象。
+            * 2. 包含两个属性
+                * type：标识属性，值为字符串，唯一、必要属性(action对象要干的事的的名)
+                * data：数据属性，值类型，任意、可选属性(action对象要干的事的具体内容)
+            * 3. 例子：{type:'玩游戏',data:{name1:'L&G',name2:'tears of themis'}}
+            * 
+        * 7.2.2 store(相当于乙方公司的老板)
+            * 1. 用于初始化状态和加工状态
+            * 2. 加工时，根据之前的state和action，产生新的state的纯函数
+        * 7.2.3 reducer(相当于乙方公司的程序员，纯冤种)
+            * 1. 将state、action、reducer联系在一起的对象
+            * 2. 如何得到此对象？
+                * import {createStore} from 'redux'
+                * import reducer from './reducers'
+                * const store=createStore(reducer)
+            * 3. 此对象的功能
+                * dispatch(action)：分发action对象，触发reducer调用，产生新的state
+                * getState()：得到state
+                * subscribe(listener)：注册监听，当产生了新的state时，自动调用
+        * 简单总结，React Components是甲方，向需求告诉Action Creators(产品经理)，AC将需求整合创建action对象，action对象里有两个属性，名为type(需求名)和data(具体需求)，使用dispatch函数交给Store(老板)，Store将Reducer(程序员)豁楞起来，并告诉他得干活了。Store将之前的状态和需求(previousState,action)告诉Reducer，并指使他按照需求干活(在这里步骤中，Store必须告诉Reducer，对象原来/之前的状态，要不然Reducer会罢工)。按照需求干完活之后，Reducer会返回一个新的状态(return newState)给Store，之后React Components会调用getState方法来从Store中得到最新的状态。这是一个轮回，如果RC觉得状态不满意，不是想要的状态，那就上面的顺序再走一遍，只不过从第二遍开始走的时候，因为之前有过一次状态了，第二次走这个步骤的时候，在Reducer中就会初始化状态。
+    * 7.3 redux的核心API
+        * 
+    * 7.4 使用redux编写应用
+        * 7.4.1 
 
 
 ###  总结
@@ -983,5 +1023,6 @@
     * 1. 一般组件是需要我自己手动写在render方法中进行渲染的；路由组件是靠路径的变化，进行路由匹配，决定渲染哪一个组件后，展示在页面上的。但这不是根本区别
     * 2. 一般组件通过props传递数据，组件标签里传递了什么就输出、展示什么；路由组件会受到路由器传递的三个最重要的三个props信息，分别是history、location、match
 * 路由路径是多级的结构，在我刷新的时候样式就会丢失。以```http://localhost:3000/atguigu/css/bootstrap.css```这个请求样式为例，丢失的原因是在多级结构中的atguigu也是localhost:3000，也就是脚手架下的路径，但是实际脚手架下没有名为atguigu的文件夹(因为atguigu是我自己加的)。第一次运行脚手架，打开浏览器时是不会出现样式丢失的情况的，甚至在Network查看时，样式文件成功发送了请求，还得到了成功的响应。点击导航链接后，刷新页面就会出现页面丢失的情况。因为无法在脚手架的根路径下找到发送请求的样式文件，所以最终展示在页面上的是public根路径下的index.html文件，且在Response部分查看，响应回来的文件的话也会发现是index.html文件。
+* 这个过程就像客人去饭店吃饭，先想想吃什么，吃是类型，吃的东西是数据，然后告诉服务员，服务员告诉后厨做饭，后厨做完以后给服务员，服务员再交给顾客。
 
 
